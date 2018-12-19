@@ -1,0 +1,105 @@
+	.title	conqfig
+	.psect	$pdata	pic,con,rel,lcl,shr,noexe,rd,nowrt,long
+;;; conqfig - Conquest configuration
+;
+;            Copyright (C)1983-1986 by Jef Poskanzer and Craig Leres
+;
+;    Permission to use, copy, modify, and distribute this software and
+;    its documentation for any purpose and without fee is hereby granted,
+;    provided that this copyright notice appear in all copies and in all
+;    supporting documentation. Jef Poskanzer and Craig Leres make no
+;    representations about the suitability of this software for any
+;    purpose. It is provided "as is" without express or implied warranty.
+;
+;	The Vax-11 Fortran "external" statement and "%loc()" construct
+;	are used to allow access to these global defines and strings.
+;
+; Useful local defines
+;
+	no = 0
+	yes = 1
+;
+;	REQUIRED CONFIGURATION SECTION: The following must be modified.
+;
+; Conqdriv: A VMS file specification which defines the location of
+; the Conquest driver. This file MUST be defined.
+;
+c_conq_conqdriv::
+	.asciz	"disk$user:[games.conquest]conqdriv.exe"
+;
+; Termcap: A VMS file specification which defines the location of the
+; gamcron file. This file MUST be defined.
+;
+c_conq_termcap::
+	.asciz	"disk$user:[games.conquest]termcap"
+;
+; Gods: A list of usernames (separated by colons) allowed to run conqoper.
+; At least one name must be defined!
+;
+c_conq_gods::
+	.asciz	"jef:leres"
+;
+; Newsfile: A VMS file specification which defines the location of
+; the Conquest news file. If there is no news file, define as "".
+;
+c_conq_newsfile::
+	.asciz	"disk$user:[games.conquest]conqnews.doc"
+;
+; Helpfile: A VMS file specification which defines the location of
+; the Conquest help file. If there is no help file, define as "".
+;
+c_conq_helpfile::
+	.asciz	"disk$user:[games.conquest]conquest.doc"
+;
+; Gamcron: A VMS file specification which defines the location of the
+; gamcron file. The gamcron file is used to decide when it's allowed
+; to play Conquest. If it is desired to disable this feature, define as "".
+;
+c_conq_gamcron::
+	.asciz	"disk$user:[games.conquest]gamcron"
+;
+;	OPTIONAL CONFIGURATION SECTION: The following default to useful values.
+;
+; Conquest: A simple file name which specifies the true name of the
+; conquest binary. If the conquest binary is run with a simple name
+; that is different from the name defined here, it will be deleted.
+; This prevents people from making copies of the conquest binary
+; and calling them things like "edt.exe". To disable this feature,
+; define as "".
+;
+c_conq_conquest::
+	.asciz	"conquest.exe"
+;
+; Antigods: A list of usernames (separated by colons) never allowed to play
+; Conquest. This string may be defined as "".
+;
+c_conq_antigods::
+	.asciz	"guest:field:system:sysmgr:tech"
+;
+; Badttys: A list of terminal names (separated by colons) from which Conquest
+; may not be played. For example, "ttb1" disallows only ttb1 while "ttb"
+; disallows all ttb ports. This string may be defined as "".
+;
+c_conq_badttys::
+	.asciz	"nty"
+;
+; Fdial: Controls dialup use. If dialup access is to be permitted,
+; define to yes. Otherwise, define to no.
+;
+	c_conq_fdial == yes
+;
+; Fsubdcl: Controls spawning to DCL. If spawning to DCL is desired, define
+; to yes. Otherwise, define to no.
+;
+	c_conq_fsubdcl == yes
+;
+; Fprio and despri: If it is desired that Conquest change its priority when
+; executing, define c_conq_fprio to yes. If Conquest should run at the users
+; default priority, define to no. If c_conq_fprio is defined to yes, then
+; a positive value of c_conq_despri specifies an absolute priority and a
+; negative value specifies how much to subtract from the current priority.
+;
+	c_conq_fprio == no
+	c_conq_despri == 0
+
+	.end

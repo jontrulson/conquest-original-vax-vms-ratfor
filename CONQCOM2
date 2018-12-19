@@ -1,0 +1,42 @@
+###############################################################################
+#
+#                             C O N Q C O M 2
+#
+#            Copyright (C)1983-1986 by Jef Poskanzer and Craig Leres
+#
+#    Permission to use, copy, modify, and distribute this software and
+#    its documentation for any purpose and without fee is hereby granted,
+#    provided that this copyright notice appear in all copies and in all
+#    supporting documentation. Jef Poskanzer and Craig Leres make no
+#    representations about the suitability of this software for any
+#    purpose. It is provided "as is" without express or implied warranty.
+#
+###############################################################################
+#
+#	Detailed revision history lives in "incl/conqdef"
+#
+###############################################################################
+
+    integer cunum			# user number
+    integer csnum			# ship number
+    integer cpid			# pid of our owner process
+    integer childpid			# pid of driver we spawned
+    integer cmaxlin			# number of lines
+    integer cmaxcol			# number of columns
+    integer ctimflag			# event flag for sys$setimr
+    integer ctimid			# request id for sys$setimr
+    integer cmsgrand			# hundreths timestamp since last message
+    integer cpriority			# normal base priority
+    integer clastime			# last time drcheck was called
+    logical csubdcl			# says if we can spawn to DCL
+    logical cnewsfile			# says if a news file is available
+    logical cleave			# just a flag
+    logical cdisplay			# should do anything in astservice()
+    logical credraw			# should redraw in display()
+    logical cmsgok			# allow new messages
+    character cbuf(MSGMAXLINE)		# general purpose buffer
+    character clastinfostr(MSGMAXLINE)	# last string used in doinfo()
+
+    common /conqcom2/ cunum, csnum, cpid, childpid, cmaxlin, cmaxcol,
+	ctimflag, ctimid, cmsgrand, cpriority, clastime, csubdcl,
+	cnewsfile, cleave, cdisplay, credraw, cmsgok, cbuf, clastinfostr

@@ -1,0 +1,21 @@
+## Common block for ionlb.
+
+    integer chan			# channel for i/o
+    integer mxchan			# channel for broadcast mailbox
+    integer*2 mxiosb(4)			# status block for broadcast mailbox
+    integer oldchar(3), newchar(3)	# terminal characteristics
+    integer ievfl			# input event flag
+    integer cevfl			# iochav() event flag
+    integer oevfl			# output event flag
+    integer mevfl			# mailbox event flag
+    integer*4 desblk(4)			# exit handler descriptor block
+    logical autobroad			# echo broadcasts immediately in or not
+    logical nobroadcast			# don't do allow any kind of broadcasts
+    character obuf(MAXOBUFSIZE)		# output buffer
+    integer obufsize			# actual output buffer size
+    integer obufp			# output buffer pointer
+    character mxbuf(MXSIZE)		# broadcast mailbox buffer
+
+    common /iocomn/ chan, mxchan, mxiosb, oldchar, newchar, ievfl, cevfl,
+	oevfl, mevfl, desblk, autobroad, nobroadcast, obuf, obufsize,
+	obufp, mxbuf

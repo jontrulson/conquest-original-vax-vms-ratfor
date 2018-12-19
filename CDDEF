@@ -1,0 +1,3 @@
+## cddef - include file for cdlb
+
+define(CDLB_PILLOW,127)

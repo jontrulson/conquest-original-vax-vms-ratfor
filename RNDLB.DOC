@@ -1,0 +1,191 @@
+
+          rndlb(lib)                 27Sep84                  rndlb(lib)
+
+
+
+
+
+          NAME
+               rndlb - random number library
+
+
+          SYNOPSIS
+                   integer i, seed1, seed2, ilow, ihigh, v1, v2, trials
+                   real r, rlow, rhigh, mean, stddev, prob
+                   integer rndint, rndgeo, rndbin, rndpoi
+                   real rnd, rnduni, rndnor, rndexp, rndchi, rndbta, rndF, rndt
+
+                   call rndini ( seed1, seed2 )
+                   r = rnd(0)
+                   r = rnduni ( rlow, rhigh )
+                   i = rndint ( ilow, ihigh )
+                   r = rndnor ( mean, stddev )
+                   r = rndexp ( mean )
+                   r = rndchi ( v1 )
+                   r = rndbta ( v1, v2 )
+                   r = rndF ( v1, v2 )
+                   r = rndt ( v1 )
+                   i = rndgeo ( prob )
+                   i = rndbin ( trials, prob )
+                   i = rndpoi ( mean )
+
+
+          DESCRIPTION
+
+               All  the  algorithms in this package are from "The Art of
+               Computer    Programming",    Vol.    2     (Seminumerical
+               Algorithms), sections 3.2.1 and 3.4.1.
+
+               rndini  initialize   the   random  number  package.  This
+                       routine must be called before any  of  the  other
+                       routines  in  this package can be called. The two
+                       seeds are used to initialize the  random  numbers
+                       in  a deterministic manner, so that each time you
+                       initialize with the same seeds you will  get  the
+                       same  sequence.  If  you  want  non-deterministic
+                       sequences, use 0 as the seeds,  and  the  current
+                       time will be used.
+
+               rnd     random  real  number in the range [0..1). This is
+                       the basic  random  number  routine.  All  of  the
+                       other   routines  call  this  one.  It  takes  an
+                       argument, but it is just a dummy.  It  returns  a
+                       random real number between 0 and 1.
+
+               rnduni  random  real  number in the specified range. This
+                       routine takes two arguments, a  lower  bound  and
+                       an  upper  bound. It returns a random real number
+                       between the two bounds.
+
+
+
+
+                                      - 1 -
+
+          rndlb(lib)                 27Sep84                  rndlb(lib)
+
+
+
+
+               rndint  random  integer  in  the  specified  range.  This
+                       routine  takes  two  arguments, a lower bound and
+                       an upper  bound.  It  returns  a  random  integer
+                       between the two bounds, inclusive.
+
+               rndnor  normally  distributed  random  real  number.  The
+                       normal  distribution  is  the  well  known  "bell
+                       curve",  popular with statisticians. This routine
+                       takes  two  arguments,  a  mean  and  a  standard
+                       deviation.   It   returns  a  real  number  whose
+                       probablilty distribution is the bell  curve  with
+                       the specified mean and standard deviation.
+
+               rndexp  exponentially  distributed  random  real  number.
+                       This routine  returns  a  real  number  from  the
+                       exponential  probability  distribution  with  the
+                       specified mean.
+
+               rndchi  random   real   number   with   the    chi-square
+                       distribution.  This distribution is also known as
+                       the  gamma  distribution  of  order  v/2.  Rndchi
+                       could  be  used  to  simulate a situation where a
+                       set of observed values are  compared  with  their
+                       theoretical    expectations   to   see   if   the
+                       differences  are  significant  in  a  statistical
+                       sense.   Scintillation   counters   might  be  an
+                       example
+
+               rndbta  random real number with  the  beta  distribution.
+                       This distribution is less widely used.
+
+               rndF    random  real  number with the F distribtion. This
+                       distribution is also known as the  variance-ratio
+                       distribution.  The  F  distribution arises in the
+                       analysis of variance, where one  wishes  to  test
+                       whether    two    populations    have   identical
+                       variances.  Consequently,  it  is  important   in
+                       regression analysis.
+
+               rndt    random  real  number with the t distribution. You
+                       would use the  t  distribution,  instead  of  the
+                       normal  distribution,  to  simulate  a case where
+                                                   _____                       you are looking at means of small samples,  where
+                       the  standard  deviation of the parent population
+                       is hard to estimate.
+
+               rndgeo  random integer with  the  geometric  distrbution.
+                       If  some  event  occurs with a given probability,
+                       then the  number  of  independent  trials  needed
+                       until   the   first   event  occurs  (or  between
+                       occurrences  of  the  event)  has  the  geometric
+                       distribution.
+
+
+
+
+                                      - 2 -
+
+          rndlb(lib)                 27Sep84                  rndlb(lib)
+
+
+
+
+               rndbin  random  integer  with  the binomial distribution.
+                       If some event occurs with a given  probability  p
+                       and  if  we  carry out t independent trials, then
+                       the total number of occurrences N equals  n  with
+                       probability:
+
+                                        t    n     t-n
+                                       ( )  p  (1-p)
+                                        n
+
+
+               rndpoi  random  integer  with  the  Poisson distribution.
+                       The  Poisson  distribution  is  related  to   the
+                       exponential    distribution   as   the   binomial
+                       distribution is  related  to  the  geometric:  it
+                       represents  the  number  of occurrences, per unit
+                       time, of an event which can occur at any  instant
+                       of   time;  for  example,  the  number  of  alpha
+                       particles emitted by a radioactive  substance  in
+                       a single  second has a Poisson distribution.  The
+                       probability that N = n (u is the mean) is:
+
+                                         -u  n
+                                        e   u  /  n !
+
+
+
+          AUTHOR(S)
+               Jef Poskanzer. Parts of the manual entry are  due  to  Ed
+               Thiel. Donald E. Knuth helped a lot.
+
+
+          BUGS/DEFICIENCIES
+               Rndlb  is  almost,  but not quite, portable. As currently
+               written, it requires integers at least 28 bits  long.  It
+               could  be  re-written  to  use  16-bit  integers, but you
+               would have to deal with arithmetic  overflows.  The  only
+               parts  affected  would  be rndini, rndseq, and the common
+               block.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 3 -
+
+ÿ

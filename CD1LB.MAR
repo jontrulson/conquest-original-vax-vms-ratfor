@@ -1,0 +1,61 @@
+;;;; cd1lb - macro 32 routines for cdlb
+;
+; 01c 23Sep83 cal .Removed cdmaketc().
+; 01b 10Sep83 cal .Renamed fillch(), movtchs(), and maktbl() to
+;                  cdfill(), cdmovtc(), and cdmaketc().
+; 01a 29May83 cal .Written
+;
+	.title	cd1lb
+	.psect	$code,pic,con,rel,lcl,shr,exe,rd,nowrt,long
+
+;;; cdfill - fill a buffer with a character
+;
+; synopsis
+;
+;    character ch, dst()
+;    integer len
+;    call cdfill ( ch, dst, len )
+;
+;	ch - character to use for fill
+;	dst - destination buffer
+;	len - character count
+;
+ap_ch = 4
+ap_dst = 8
+ap_len = 12
+
+	.entry	cdfill,^m<r2,r3,r4,r5>	; movc5 uses lots of registers
+
+	movc5	#0,#0,@ap_ch(ap),@ap_len(ap),@ap_dst(ap)
+
+	ret
+
+;;; cdmovtc - move translated characters
+;
+; synopsis
+;
+;    character src(), dst(), tbl(256)
+;    integer len
+;    call cdmovtc ( src, dst, tbl, len )
+;
+;	src - source buffer
+;	dst - destination buffer
+;	tbl - table buffer
+;	len - character count
+;
+;
+ap_src = 4
+ap_dst = 8
+ap_tbl = 12
+ap_len = 16
+fill = 0
+
+	.entry	cdmovtc,^m<r2,r3,r4,r5>
+
+	movtc	@ap_len(ap),@ap_src(ap),-
+		#fill,@ap_tbl(ap),-
+		@ap_len(ap),@ap_dst(ap)
+
+	ret
+
+	.end

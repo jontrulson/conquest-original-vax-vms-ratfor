@@ -1,0 +1,380 @@
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+
+
+          NAME
+               cdlb - Craig's display library
+
+
+          SYNOPSIS
+               include "cddef"
+
+               call cdinit
+               call cdend
+               call cdredo
+
+               integer minlin, mincol, maxlin, maxcol, lin, numlins
+               call cdclear
+               call cdclra ( minlin, mincol, maxlin, maxcol )
+               call cdclrl ( lin, numlins )
+
+               character ch, str()
+               integer lin, col, int, minwid
+               real rl
+               call cdput ( ch, lin, col )
+               call cdputs ( str, lin, col )
+               call cdputc ( str, lin )
+               call cdputn ( int, minwid, lin, col )
+               call cdputr ( rl, minwid, lin, col )
+
+               character cdgfont, cdsngfont, cdnulfont
+               character cdandfont, cdorfont, cdnotfont
+               character f, f1, f2
+               integer att
+               call cdfont ( f )
+               f = cdgfont ( 0 )
+               f = cdsngfont ( att )
+               f = cdnulfont ( 0 )
+               f = cdandfont ( f1, f2 )
+               f = cdorfont ( f1, f2 )
+               f = cdnotfont ( f1 )
+
+               integer lin1, col1, lin2, col2
+               call cdline ( lin1, col1, lin2, col2 )
+               call cdbox ( lin1, col1, lin2, col2 )
+
+               integer lin, col
+               call cdmove ( lin, col )
+
+               logical stoponinput
+               call cdplay ( stoponinput )
+
+               character pmt(), str(), terms(), termch
+               integer status, cdgets, maxlen, lin, col, cdgetn, num
+               status = cdgets ( pmt, lin, col, str, maxlen )
+               termch = cdgetx ( pmt, lin, col, terms, str, maxlen )
+               termch = cdgetp ( pmt, lin, col, terms, str, maxlen )
+
+
+
+                                      - 1 -
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+               status = cdgetn ( pmt, lin, col, num )
+
+
+          DESCRIPTION
+               Cdlb   is  a  package  of  routines  to  help  you  write
+               screen-oriented  (non-cpu-bound)  programs.  Cdlb   keeps
+               track  of things in two buffers; one is called the actual
+               image and the other is  called  the  desired  image.  The
+               actual  image  always  is the same as what is actually on
+               the terminals screen. The actual  image  is  modified  to
+               look like the desired image when cdplay() is called.
+
+               Normally,  you manipulate the desired image and then call
+               cdplay() to draw the screen.
+
+               Cdlb uses sclb(lib) to find out about terminal  dependent
+               features;   it  also  uses  iolb(lib)  to  perform  "raw"
+               terminal  i/o.  Terminals  that  use  cdlb  programs  are
+               required to:
+
+                   (1) not be hardcopy terminals
+
+                   (2) have   the   ability   to   do   absolute  cursor
+                       addressing OR have the  ability  to  do  relative
+                       cursor addressing and move the cursor to home
+
+                   (3) have the ability to clear the screen
+
+
+
+               1  Descriptions of the routines               1. Descriptions of the routines.               _. ____________ __ ___ ________.               1. Descriptions of the routines.
+
+               cdinit     initializes  cdlb.  Cdinit() clears the actual
+                          and desired  images  and  must  be  the  first
+                          routine called from cdlb.
+
+               cdend      terminates  cdlb.  This routine must be called
+                          before exiting.
+
+               cdredo     force  a  complete   screen   refreash.   This
+                          routine  clears both the terminals display and
+                          the actual image.
+
+               cdclear    clears the desired image.
+
+               cdclra     clears  a  rectangular  area  of  the  desired
+                          image.  "Minlin"  and  "maxlin"  are the first
+                          and last  lines  of  the  area  to  clear  and
+                          "mincol"  and  "maxcol" are the first and last
+                          columns of the area to clear.
+
+               cdclrl     clears  one  or  more  lines  of  the  desired
+                          screen  image.  "Lin"  is  the  first  line to
+                          clear and "numlins" is the number of lines  to
+
+
+
+                                      - 2 -
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+                          clear.
+
+               cdput      puts  a character into the desired image. "Ch"
+                          is the character to  put  on  the  screen  and
+                          "lin"  and  "col"  are  the line and column to
+                          put it on.
+
+               cdputs     puts a string into the  desired  image.  "Str"
+                          is  the  string to put on the screen and "lin"
+                          and "col"  specify  the  line  and  column  to
+                          place the string.
+
+               cdputc     puts   a   string   into  the  desired  image,
+                          centered. "Str" is the string to  put  on  the
+                          desired  image and "lin" is the line to put it
+                          on.
+
+               cdputn     puts a number into the  desired  image.  "Int"
+                          is  the number and "lin" and "col" specify the
+                          position.  "Minwid"  specifies   the   minimum
+                          width  and  the  number is padded with blanks,
+                          if necessary.
+
+               cdputr     puts a real number  into  the  desired  image.
+                          This   routine   is   otherwise   similar   to
+                          cdputn().
+
+               cdfont     changes to the desired  font.  Each  character
+                          in  the desired image has a font. Changing the
+                          desired  font  changes  the  font   that   new
+                          characters  placed  in  the desired image will
+                          receive.
+
+               cdgfont    returns the description of the current font.
+
+               cdsngfont  returns the description of a  font  which  has
+                          just   the   attribute   "att"  set.  Possible
+                          attributes      are       ATTRIBUTE_HIGHLIGHT,
+                          ATTRIBUTE_UNDERLINE,        ATTRIBUTE_REVERSE,
+                          ATTRIBUTE_BLINK,    ATTRIBUTE_GRAPHICS,    and
+                          ATTRIBUTE_ALTERNATE.
+
+               cdnulfont  returns  the description of a font that has no
+                          attributes set.  This  is  called  the  normal
+                          font  and  it  that is in effect when cdinit()
+                          is called.
+
+               cdandfont  returns the description of  a  font  that  has
+                          all  attributes  that  are  set  in both fonts
+                          "f1" and "f2" at once.
+
+               cdorfont   returns the description of  a  font  that  has
+                          all  attributes  that  are  set in either font
+                          "f1" or "f2".
+
+
+
+                                      - 3 -
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+               cdnotfont  returns the description of  a  font  that  has
+                          all  the  attributes  that are not in the font
+                          "f1".
+
+               cdline     draws a line. The  line  is  drawn  from  line
+                          "lin1"  column  "col1"  to  line "lin2" column
+                          "col2". The line must be either horizontal  or
+                          vertical.
+
+               cdmove     specifies the desired cursor position.
+
+               cdbox      draws a box defined by the two points.
+
+               cdplay     optimaly  updates  the  actual  image  to look
+                          like the desired image.
+
+                          An important  feature  to  note  is  that,  if
+                          "stoponinput"  is  .true.,  the routine checks
+                          every so  often  whether  any  new  characters
+                          have   been  typed  by  the  user.  If  a  new
+                          character is available, the routine will  stop
+                          updating  the screen and return immediately to
+                          allow  the  main  program   to   process   the
+                          character.
+
+               cdgets     reads  a  line via the screen. Cdgets() writes
+                          the prompt "pmt" at the position specified  by
+                          "lin"  and  "col"  and  then reads a line from
+                          the terminal, which  is  returned  in  str.  A
+                          maximum  of  "maxlen"  characters  will be put
+                          into "str", although more may be read.
+
+                          You can erase characters  with  either  delete
+                          or  backspace.  You  can  erase  the line with
+                          either control-x or control-u. You  can  erase
+                          the   last   word   with  control-w.  You  can
+                          redisplay  the  screen   with   control-l   or
+                          redisplay the line with control-r.
+
+                          If  no string is input, ERR is returned as the
+                          status; otherwise OK.
+
+               cdgetx     reads  a  line  via  the  screen,   specifying
+                          terminating  characters.  Characters  are read
+                          up to one of the terminator characters in  the
+                          string "terms".
+
+                          Characters   are    read  up  to  one  of  the
+                          terminator  characters  and  the   terminating
+                          character  is  returned as the function value.
+                          Otherwise,  this  is  routine  is  similar  to
+                          cdgets().
+
+
+
+
+
+                                      - 4 -
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+
+               cdgetp     Similar  to  cdgetx(),  this  routine uses the
+                          characters in "str" as the default input.  The
+                          user  can  edit  the  string using delete, ^W,
+                          etc., as with cdgetx() and cdgets().
+
+               cdgetn     read  a  number  via  the   screen.   Cdgetn()
+                          prompts  for  a  number  as  in  cdgets()  and
+                          returns it in  num.  Cdgets  is  used.  If  no
+                          number  is  input,  ERR  is  returned  as  the
+                          status; otherwise OK.
+
+
+               2  Helpful hints               2. Helpful hints.               _. _______ _____.               2. Helpful hints.
+
+               When first learning how to  use  cdlb,  keep  it  simple.
+               I.e. don't fool around with fonts or lines.
+
+               Sometimes,  the  screen will get screwed up by a terminal
+               broadcast or something. Here's one  easy  way  to  redraw
+               the screen:
+
+                   call cdredo                # force a refreash
+                   call cdplay ( .false. )    # draw the screen again
+
+               There  are really two ways to use cdclear() when you want
+               to put a different image up on the screen. For example:
+
+                   call cdinit
+                   <modify the desired image>
+                   call cdplay ( .false. )
+                   call cdclear
+                   <modify the desired image again>
+                   call cdplay ( .false. )
+
+               In this example, the first time cdplay() is  called,  the
+               screen  is  updated as expected. The second time cdplay()
+               is called, the screen is  updated  by  changing  what  is
+               already on the screen.
+
+               Now another example:
+
+                   call cdinit
+                   <modify the desired image>
+                   call cdplay ( .false. )
+                   call cdclear
+                   call cdredo                       # force a redraw
+                   <modify the desired image again>
+                   call cdplay ( .false. )
+
+               This  example  is  just  like the previous one except the
+               second time cdplay() is called,  the  screen  is  cleared
+               and  the new characters are simply displayed on the clean
+               screen.
+
+
+
+                                      - 5 -
+
+          cdlb(lib)                  05Oct84                   cdlb(lib)
+
+
+
+
+
+          FILES
+               incl/cdlb - user visible symbols
+
+
+          SEE ALSO
+               iolb(lib), sclb(lib), termcap(file)
+
+
+          AUTHOR(S)
+               Craig Leres
+
+
+          BUGS/DEFICIENCIES
+               The routine names and interfaces should  look  more  like
+               the Unix "curses" package.
+
+               Character attributes are handled in an strange way.
+
+               See iolb(lib) and sclb(lib) for more bug lists.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 6 -
+
+ÿ

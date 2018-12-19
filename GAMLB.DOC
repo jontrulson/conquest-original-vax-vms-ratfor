@@ -1,0 +1,128 @@
+
+          gamlb(lib)                 13Sep85                  gamlb(lib)
+
+
+
+
+
+          NAME
+               gamlb - game restriction library
+
+
+          SYNOPSIS
+               character truename()
+               call gaminit( truename )
+
+               logical fdial, fprio, fcron
+               integer despri
+               character badlist(), badttylist(), truename(), cronfile()
+               call gamlinit( fdial, fprio, fcron, despri, badlist, badttylist,
+                   truename, cronfile )
+
+               call gamend
+
+
+          DESCRIPTION
+
+               This  library  provides  a  simple  method of restricting
+               game-playing. The current restrictions are:
+
+                   (1) GUEST may not play games.
+
+                   (2) No games while logged in on a dial-up line  or  a
+                       network terminal.
+
+                   (3) No  games  except  during the times listed in the
+                       game cron file.
+
+                   (4) Games are played with a base priority of 2.
+
+               In addition, there is an  optional  security  feature  to
+               discourage  game players from making copies of a game. If
+                    ________               the  truename  parameter  is  an  empty  string,  it   is
+               ignored.  If  it  is  a  simple  filename,  it is checked
+               against the simple filename of the current image.  If  it
+               is  a  full  pathname,  it  is  checked  against the full
+               pathname of the current image. If there  is  a  mismatch,
+                             removed,                             removed,               the copy gets removed, and the user is berated.
+
+               Valid  times to play are listed in the game cron file. If
+               the current time and date matches at least one  entry  in
+               this  file,  then  it may well be a "good" time to play a
+               game.
+
+               A low level access  to  the  routines  is  provided  thru
+               gamlinit().  If  the logical fdial is .true., then dialup
+               use is permitted. If the logical fprio  is  .true.,  then
+               priority  alteration  occurs.  If  the  logical  fcron is
+               .true., then the game cron file is checked. If  fprio  is
+               .true.,  despri is used to determine the new priority. If
+
+
+
+                                      - 1 -
+
+          gamlb(lib)                 13Sep85                  gamlb(lib)
+
+
+
+               despri  is  positive,  then  is  specifies  an   absolute
+               priority.  If  it  is negative, then it specifies a delta
+               priority. If it is zero, the  default  lowered  priority,
+               two  less  than the current priority, is used. Badlist is
+               a string  that  contains  account  names  that  are   not
+               allowed  to  play,  separated  by COLONs. Badttylist is a
+               string that contains terminal name prefixes that may  not
+               be  used  to  play, separated by COLONs. Truename behaves
+               as above. Cronfile is the file to use for time  checking.
+               If it is empty, a default is used.
+
+
+          FILES
+               /misc/lib/gamcron - default list of "legal" times to play.
+
+
+          SEE ALSO
+               enlb(lib)
+
+
+          AUTHOR(S)
+               Jef Poskanzer and Craig Leres.
+
+
+          BUGS/DEFICIENCIES
+
+               Running  at  a  base  priority  of two is dangerous. (See
+               kill(tool) for information on how to unwedge  stuck  game
+               processes.)
+
+               A terminal  is  ASSUMED  to  be a dialup if it is has the
+               attributes remote and modem.
+
+               Since enlb is kept in iolb, it is necessary to link  with
+               iolb. For example:
+
+                   % rc src/program gamlb iolb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 2 -
+
+ÿ

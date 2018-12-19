@@ -1,0 +1,39 @@
+## cdcom - include file for cdlb
+
+    # Actual image.
+    character aimage(MAXSCCOLS,MAXSCLINS)	# characters in actual image
+    integer alinend(MAXSCLINS)			# last non-blank postion
+    character afont(MAXSCCOLS,MAXSCLINS)	# fonts of characters in image
+    integer alin				# actual cursor line number
+    integer acol				# actual cursor column number
+
+    # Desired image.
+    character dimage(MAXSCCOLS,MAXSCLINS)	# characters in desired image
+    integer dlinend(MAXSCLINS)			# last non-blank postion
+    character dfont(MAXSCCOLS,MAXSCLINS)	# fonts of characters in image
+    integer dlin				# desired cursor line number
+    integer dcol				# desired cursor column number
+
+    integer firstcol(MAXSCLINS)			# first modified column
+    logical changed(MAXSCLINS)			# which lines are different
+
+    # Relative movement costs.
+    integer colcost(-MAXSCCOLS:MAXSCCOLS)
+    integer lincost(-MAXSCLINS:MAXSCLINS)
+
+    # Displayable translation table.
+    character trntbl(256)
+
+    # Maximum screen dimensions.
+    integer maxlin				# maximum line
+    integer maxcol				# maximum column
+
+    # First line to update in next call to cdplay().
+    integer upline
+
+    character afontc				# actual font
+    character dfontc				# desired font
+
+    common /cdcom/ aimage, alinend, afont, alin, acol, dimage, dlinend,
+        dfont, dlin, dcol, firstcol, changed, colcost, lincost, trntbl,
+        maxlin, maxcol, upline, afontc, dfontc

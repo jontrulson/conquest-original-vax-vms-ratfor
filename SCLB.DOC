@@ -1,0 +1,128 @@
+
+          sclb(lib)                  18Oct84                   sclb(lib)
+
+
+
+
+
+          NAME
+               sclb - terminal-independent screen control package
+
+
+          SYNOPSIS
+
+               logical dodumb
+               call scinit
+               call sclinit ( dodumb )
+               call scend
+
+               call scclear
+               call schome
+               call scbol
+
+               integer n
+               call scleft ( n )
+               call scright ( n )
+               call scup ( n )
+               call scdown ( n )
+
+               integer lin, col
+               call scmove ( lin, col )
+
+               logical truth, scdisp
+               character ch
+               truth = scdisp ( ch )
+
+
+          DESCRIPTION
+
+               Sclb  is  a  package of routines which lets you do cursor
+               addressing, screen clearing, and other  screen  functions
+               in   a   terminal-independant   way.   It  is  basicly  a
+               convenient interface to the termcap file.
+
+               The user must defined the enviroment variable TERM  to  a
+               valid  terminal  type  as  found in the termcap file when
+               using a sclb program.
+
+               Descriptions of the routines:
+
+               scinit  initialization  for  the  screen  package.   This
+                       routine  must be called before any others in this
+                       package.
+
+               sclinit low level initialization for the screen  package.
+                       This  routine may be called in place of scinit().
+                       If "dodumb" is .false.,  then  sclb  will  behave
+                       just  as it does when scinit() is called, i.e. if
+                       the termcap file cannot be opened,  if  the  TERM
+                       variable  is  not  available,  or if the terminal
+
+
+
+                                      - 1 -
+
+          sclb(lib)                  18Oct84                   sclb(lib)
+
+
+
+                       type cannot be located in the termcap file,  sclb
+                       will  abort  by  calling  error(). If "dodumb" is
+                       .true., then instead  of  aborting,  a  built  in
+                       prototype dumb terminal will be used.
+
+               scend   termination  for  the  screen  package.  You must
+                       call this routine before your program exits.
+
+               scclear clear the entire screen.
+
+               schome  move the cursor to the upper left corner  of  the
+                       screen.
+
+               scbol   move  the  cursor to the beginning of the current
+                       line.
+
+               scleft  move the cursor to the left n columns.
+
+               scright move the cursor to the right n columns.
+
+               scup    move the cursor up n lines.
+
+               scdown  move the cursor down n lines.
+
+               scmove  directly address the cursor.
+
+               scdisp  returns .true. if the  passed  character  can  be
+                       displayed, else .false.
+
+
+          FILES
+               incl/sclb   - symbol definitions needed if you include sclb.c
+               incl/sclb.c - common block containing user-visible parameters
+
+
+          SEE ALSO
+               iolb(lib), cdlb(lib), termcap(file),
+
+
+          AUTHOR(S)
+               Jef Poskanzer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 2 -
+
+ÿ

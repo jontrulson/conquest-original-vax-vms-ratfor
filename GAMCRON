@@ -1,0 +1,44 @@
+## gamcron - list of legal times to play games
+#
+# Revision history:
+#
+# 01c 19Jan84 cal .Added new state holiday for January.
+# 01b 24Oct83 cal .Updated for 1983.
+# 01a 10Jan82 cal .Written.
+#
+# Description:
+#
+#   Entries are of the format:
+# 
+#	minute:hour:day:month:weekday:random-message
+#
+#   It is sufficient to match only one entry in this file.
+#
+#	6pm until the last minute of 11pm,
+#	midnight to the last minute of 7am,
+#	Saturday and Sunday.
+#
+*:18-23:*:*:*:
+*:0-7:*:*:*:
+*:*:*:*:6,7:
+#
+#	Various (predictable) holidays
+#
+*:*:15-21:1:1:Martin Luther King Junior's Birthday
+*:*:15-21:2:1:President's Day
+*:*:25-31:5:1:Memorial Day
+*:*:1-7:9:1:Labor Day
+*:*:22-28:11:4:Thanksgiving
+*:*:23-29:11:5:Friday after Thanksgiving
+#
+#	Absolute holidays
+#
+*:*:1:1:*:New Years Day
+*:*:4:7:*:Independence Day
+*:*:25:12:*:Christmas Day
+#
+#	Grody (unpredictable) holidays for 1983
+#
+*:*:26,27:12:*:Christmas
+*:*:28:12:*:Spring Administrative Holiday
+*:*:29,30:12:*:New Year's

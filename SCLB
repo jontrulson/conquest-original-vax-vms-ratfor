@@ -1,0 +1,82 @@
+## sclb - include file for screen package
+#nolist
+
+# modification history
+# ------------ -------
+# 01c 28sep82 th  added definitions for line segment things
+# 01b 13jul82 th  added keypad and attribute definitions
+
+# Maximum size of the screen.  Used by dslb.
+define(MAXSCLINS,40)
+define(MAXSCCOLS,80)
+
+define(CANT,5000)  # This value is given as the character-cost of functions
+                   # which a terminal can't perform.
+
+# keypad definitions
+define(KEYPAD_0,1)
+define(KEYPAD_1,2)
+define(KEYPAD_2,3)
+define(KEYPAD_3,4)
+define(KEYPAD_4,5)
+define(KEYPAD_5,6)
+define(KEYPAD_6,7)
+define(KEYPAD_7,8)
+define(KEYPAD_8,9)
+define(KEYPAD_9,10)
+define(KEYPAD_F0,11)
+define(KEYPAD_F1,12)
+define(KEYPAD_F2,13)
+define(KEYPAD_F3,14)
+define(KEYPAD_F4,15)
+define(KEYPAD_F5,16)
+define(KEYPAD_F6,17)
+define(KEYPAD_F7,18)
+define(KEYPAD_F8,19)
+define(KEYPAD_F9,20)
+define(KEYPAD_UP,21)
+define(KEYPAD_LEFT,22)
+define(KEYPAD_DOWN,23)
+define(KEYPAD_RIGHT,24)
+define(KEYPAD_PERIOD,25)
+define(KEYPAD_COMMA,26)
+define(KEYPAD_MINUS,27)
+define(KEYPAD_ENTER,28)
+define(MAX_KEYPAD_KEYS,28)
+
+# special graphics characters
+define(NUMBER_GRAPHICS_CHARS,16)
+define(LSEG_D,1)
+define(LSEG_L,2)
+define(LSEG_LD,3)
+define(LSEG_U,4)
+define(LSEG_UD,5)
+define(LSEG_UL,6)
+define(LSEG_ULD,7)
+define(LSEG_R,8)
+define(LSEG_RD,9)
+define(LSEG_RL,10)
+define(LSEG_RLD,11)
+define(LSEG_RU,12)
+define(LSEG_RUD,13)
+define(LSEG_RUL,14)
+define(LSEG_RULD,15)
+define(GRAPHICS_PILLOW,16)
+
+# attribute definitions
+define(ATTRIBUTE_STRING,"hurbga")
+define(ATTRIBUTE_HIGHLIGHT,1)		# h
+define(ATTRIBUTE_UNDERLINE,2)		# u
+define(ATTRIBUTE_REVERSE,3)		# r
+define(ATTRIBUTE_BLINK,4)		# b
+define(ATTRIBUTE_GRAPHICS,5)		# g
+define(ATTRIBUTE_ALTERNATE,6)		# a
+define(MAX_ATTRIBUTES,6)
+
+define(ATTRIBUTE_ON,-1)
+define(ATTRIBUTE_OFF,0)
+define(ATTRIBUTE_UNCHANGED,1)
+
+define(MAX_ATTRIBUTE_SEQUENCES,36)
+
+#list

@@ -1,0 +1,307 @@
+
+
+
+
+                           Conquest installation guide                           Conquest installation guide                           Conquest installation guide
+
+                                   Craig Leres
+
+
+
+
+          1  Introduction          1. Introduction          _. ____________          1. Introduction
+
+                                                       Conquest                                                       Conquest          This  document  describes  how  to  install  Conquest  on your
+          VAX/VMS system.
+
+                              Conquest                              Conquest          The installation of Conquest consists of the following steps:
+
+                                                                Conquest                                                                Conquest              (1) Determine   where   the   files   of   the    Conquest
+                  distribution  will  reside  and and make the necessary
+                             _______ ___                  changes to conqfig.mar.
+
+              (2) Build the binaries.
+
+              (3) Copy the common block  into  sys$library,  and  modify
+                  sys$manager:systartup.com  so that the common block is
+                  installed at bootup time.
+
+              (4) Run the operator program and initialize the universe.
+
+
+          2  Configuring conqfig mar          2. Configuring conqfig.mar          _. ___________ _______.___          2. Configuring conqfig.mar
+
+                                     _______ ___          The configuration module,  conqfig.mar,  is  broken  into  two
+                                                                required                                                                required          main   sections.   The   first   section   is   the   required
+          configuration section.          configuration section.          configuration section.
+
+                                     required configuration section.                                     required configuration section.          The following comprise the required configuration section.
+
+          c_conq_conqdriv
+                                   Conquest                                   Conquest                This string tells  Conquest  where  the  driver  program
+                lives.
+
+          c_conq_termcap
+                This  string  is used to describe where the termcap file
+                lives. For more information about the termcap file,  see
+                ____ ___                sclb.doc and the appendix.
+
+          c_conq_gods
+                This  string  lists  users that are permitted to run the
+                Conquest                Conquest                Conquest  operator  program.  Use  colons  to   separate
+                account names.
+
+          c_conq_newsfile
+                                                Conquest                                                Conquest                This  string  defines where the Conquest new file lives.
+                                  ________ ___                The  news  file,  conqnews.doc  contains  a  history  of
+                bugfixes  and  new  features. This feature may be turned
+
+
+
+          Version 4.22                - 1 -
+
+          Conquest installation guide                            05Sep86
+
+
+
+                off by making the string empty.
+
+          c_conq_helpfile
+                                                      Conquest                                                      Conquest                This  string  defines   where   the   Conquest   manual,
+                ________ ___                conquest.man,  lives. It is used to provide on-line help
+                from within the game.
+
+          c_conq_gamcron
+                                                       Conquest                                                       Conquest                This file is used  to  restrict  when  Conquest  can  be
+                played.  Valid times are listed. If the current time and
+                date matches at least one entry in this  file,  then  it
+                is considered a "good" time to play.
+
+                There  are  6  fields  in a valid entry in the game cron
+                file. Fields are separated with colons; the  fields  are
+                minute  (0-59),  hour (0-23), day of month (1-31), month
+                of year (1-12), day of week (1-7  where  1  is  Monday),
+                and  finally  a random message. Each entry specifies one
+                case when it is allowable to play the game. A range  may
+                be  specified by using a minus sign. A list is separated
+                with commas. An asterisk matches any time.  Also,  lines
+                that  begin  with  a hash character are considered to be
+                comments.
+
+                                               _______                To disable this feature, edit  gamcron  and  insert  the
+                line "*:*:*:*:*:".
+
+          The  following describes the optional configuration section of
+          _______ ___          conqfig.mar.
+
+          c_conq_conquest
+                This string is used to  detect  bootleg  copies  of  the
+                Conquest                                   Conquest,                Conquest                                   Conquest,                Conquest  binary.  When  a  user  invokes  Conquest, the
+                program determines the pathname of the image he ran;  if
+                                                        c_conq_conquest,                                                        c_conq_conquest,                it  doesn't  match the image defined by c_conq_conquest,
+                the users bootleg copy is removed. This  option  may  be
+                                     c_conq_conquest                                     c_conq_conquest                turned off by making c_conq_conquest an empty string.
+
+          c_conq_antigods
+                This  string  lists users that are never allowed to play
+                Conquest.                Conquest.                Conquest. Use colons to separate account names.
+
+          c_conq_badttys
+                This string lists terminal names (seperated  by  colons)
+                             Conquest                             Conquest                from  which  Conquest  may  not  be played. For example,
+                "ttb1" disallows only ttb1  while  "ttb"  disallows  all
+                ttb ports.
+
+          c_conq_fdial
+                This  define  selects whether or not users may play from
+                dialup lines, i.e. if it is defined "no" and  the  users
+                terminal  has the attribute DIALUP, he is not allowed to
+
+
+
+          Version 4.22                - 2 -
+
+          Conquest installation guide                            05Sep86
+
+
+
+                play. If  it  is  defined  "yes",  then  dialup  use  is
+                permitted.
+
+          c_conq_fsubdcl  This define controls whether or not a user may
+                                   Conquest.                                   Conquest.                spawn to DCL from  Conquest.
+
+          c_conq_fprio
+                This define selects whether or not  priority  alteration
+                should  occur. If it is defined "yes", then the priority
+                                                          c_conq_despri,                                                          c_conq_despri,                is changed  according  to  the  constant  c_conq_despri,
+                which is described below.
+
+          c_conq_despri
+                                              c_conq_fprio                                              c_conq_fprio                This  define  is used only if c_conq_fprio is defined to
+                be  "yes".  A  positive  value  specifies  an   absolute
+                priority  to  run at while in the game. A negative value
+                specifies a delta amount below the current  priority  to
+                run at.
+
+          Strings that are filenames should valid VAX/VMS filespecs.
+
+
+          3  Building the binaries          3. Building the binaries          _. ________ ___ ________          3. Building the binaries
+
+                                               _______ ___          After  you have finished configuring conqfig.mar it is time to
+          create the binaries. First, make the common block:
+
+              $ @conqcm
+
+                                                Conquest                                                Conquest          Note that it is necessary to make the Conquest  binaries  each
+          time a new common block is created.
+
+                         _______ ___          Next, assemble conqfig.mar and make the game binaries:
+
+              $ @build
+
+          You should now have the following binaries:
+
+              conqcm.exe    - the common block
+              conquest.exe  - the player program
+              conqdriv.exe  - the driver
+              conqoper.exe  - the operator program
+
+
+
+          4  Installing the common block          4. Installing the common block          _. __________ ___ ______ _____          4. Installing the common block
+
+                                      SYSTEM                                      SYSTEM          The  next few steps require SYSTEM privileges. First, you must
+                                      ______ ___          copy the common block file, conqcm.exe, into sys$library.
+
+
+
+
+
+
+          Version 4.22                - 3 -
+
+          Conquest installation guide                            05Sep86
+
+
+
+          Next, add the necessary commands to the system  startup  file,
+          sys$manager:systartup.com,   so   that  the  common  block  is
+          installed every time the machine boots:
+
+              $ ! Install the Conquest common block
+              $ set prot=(sy:rwed,ow:rwed,gr:rwe,wo:rwe) -
+              sys$library:conqcm.exe
+              $ mcr install
+              sys$library:conqcm.exe /write /share
+              $ !
+
+
+          Finally, install the common block manually so you  don't  have
+          to  re-boot  right  now.  To  do this, simply type the command
+          lines you added to the system startup file by hand.
+
+
+          5  Final installation          5. Final installation          _. _____ ____________          5. Final installation
+
+          Now make sure that the binaries and ascii files  are  properly
+          located.  Their  pathnames  must  correspond  exactly with the
+                                _______ ___          ones you specified in conqfig.mar. It  is  strongly  suggested
+          that  the  binaries  only  be  given world execute protections
+          (i.e.  sy:rwed,ow:rwed,gr:e,wo:e)  to  prevent  tampering.  Be
+          careful  with  the protections of the directory containing the
+                                            Conquest                                            Conquest          binaries; all user who will play  Conquest  must  be  able  to
+                           ________ ___       ________ ___          execute   both   conquest.exe  and  conqdriv.exe  and  perhaps
+          ________ ___                   ________ ___       ________ ___          conqoper.exe. (Of course, only conquest.exe  and  conqoper.exe
+                                       ________ ___          are  ever executed manually. Conqdriv.exe is automatically run
+          by conquest.exe.)
+
+          Next, login to an account that is allowed to run the  operator
+                         ________          program.  Run  conqoper  and  initialize  the  Universe. To do
+          this, type "I", followed by "e" (for everything),  and  answer
+          "y".  Now,  the game should be closed, so type "f" to flip the
+          open/closed flag.
+
+          Now you're ready to play!
+
+
+          6  Player setup          6. Player setup                            Conquest,          _. ______ _____                            Conquest,          6. Player setup Before a player can  play  Conquest,  he  must
+          setup a few logical names.
+
+                  Conquest                  Conquest          First,  Conquest  must  know  what  kind  of  terminal you are
+                         _______          using. Examine termcap and find the name that  specifies  your
+                                                         _______          terminal.  (If you can't find your terminal in termcap, you'll
+          have to write your own; check out the appendix.)
+
+          Next, define a  logical  name  that  specifies  your  terminal
+          type. For example:
+
+              $ define /job env_term "h19"
+
+
+
+          Version 4.22                - 4 -
+
+          Conquest installation guide                            05Sep86
+
+
+
+          The double quotes are important.
+
+          Conquest          Conquest                                              _______          Conquest  also  needs to know where to find a copy of termcap.
+          Users can either keep private copies  or  else  use  the  copy
+          that  lives  with  the  distribution.  In  any case, they must
+                                 _______          specify what directory termcap is located in. For example:
+
+              $ define /job env_lib "disk$user:[games.conquest]"
+
+          Note that it's  sometimes  convenient  to  create  this  as  a
+          system logical name.
+
+
+          7  Appendix  information about termcap          7. Appendix: information about termcap          _. ________: ___________ _____ _______          7. Appendix: information about termcap
+
+          _______          Termcap  is  a  database  describing  terminals. If you have a
+                                           _______          terminal that isn't described in termcap it may  be  necessary
+          for  you  to  write  a termcap entry. Information necessary to
+                                              ____ ___          write a termcap entry is located in sclb.doc.
+
+                                         _______          Terminals  are  described  in  termcap  by  giving  a  set  of
+          capabilities   which   they   have,   and  by  describing  how
+          operations are performed.
+
+                     _______          Entries in termcap  consist  of  a  number  of  ":"  separated
+          fields.  The first field for each terminal is a unique integer
+          to identify it internally. The second field  gives  the  names
+          which   are   known   for   the  terminal,  separated  by  "|"
+          characters.
+
+                        Conquest                        Conquest          Note   that   Conquest   doesn't   use   insert/delete   line,
+          insert/delete  character, or scrolling regions, so don't waste
+          time working on adding these attributes.
+
+          On the other hand, if your terminal has  graphics  characters,
+          it  is definitely worth the trouble to set up the line drawing
+          attributes correctly.
+
+          Finally, it is very important that  autonl  attribute  matches
+          the  kind  of  terminal  you  are using. In particular, vt100s
+                      all                      all          should have all of their auto-newline settings disabled.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          Version 4.22                - 5 -
+
+ÿ

@@ -1,0 +1,254 @@
+
+          iolb(lib)                  30Jun86                   iolb(lib)
+
+
+
+
+
+          NAME
+               iolb - raw-mode I/O library
+
+
+          SYNOPSIS
+
+               character ch
+               integer seconds
+               logical gotone, avail, ioqquick, iogtimed, iochav, iopeek
+               call ioinit
+               call ioend
+               ch = iogchar( ch )
+               call iopchar( ch )
+               gotone = iogquick( ch )
+               gotone = iogtimed( ch, seconds )
+               gotone = iopeek( ch )
+               avail = iochav( 0 )
+
+               character str(), buf()
+               logical iogstr
+               integer maxlen, n
+               gotone = iogstr( str, maxlen )
+               call iopstr( str )
+               call iopbuf( n, buf )
+               call iopline( str )
+
+               character buf()
+               integer num, status
+               call ioflush
+               call ioeat
+               call iocrlf
+               call iospaces( num )
+               call ioerror( str, status )
+               call iofmtstr( buf )
+
+               # VAX ONLY
+               logical oldmode, newmode, ioautobroad, iogbroadcast
+               oldmode = ioautobroad( newmode )
+               gotone = iogbroadcast( buf )
+               call iovmserror( str, status )
+
+
+          DESCRIPTION
+               Iolb  is designed to provide raw-mode I/O to and from the
+               user's terminal.  Raw-mode  I/O  is  the  simplest  thing
+               possible:  when the user types a character, it is read by
+               the program; when the program writes a character,  it  is
+               sent  to  the  terminal.   No  line-by-line  reading,  no
+               converting tabs to spaces, spaces to tabs, lower case  to
+               upper  and  upper  to  lower, no ignoring some characters
+               and   intercepting   others...    nothing   but    simple
+               read-a-character, write-a-character.
+
+
+
+                                      - 1 -
+
+          iolb(lib)                  30Jun86                   iolb(lib)
+
+
+
+
+
+               1  Descriptions of the routines               1. Descriptions of the routines.               _. ____________ __ ___ ________.               1. Descriptions of the routines.
+
+               ioinit       initializes  iolb.  Ioinit()  must be called
+                            before any other routines in iolb.
+
+               ioend        terminates  iolb.  This  routine   must   be
+                            called before exiting.
+
+               iogchar      gets a character.
+
+               iopchar      outputs a character.
+
+               iogquick     gets   a   character  from  the  type  ahead
+                            buffer, if one is available.
+
+               iogtimed     reads  a  character  with  timeout.   If   a
+                            character  isn't  input,  in  the  number of
+                            seconds  specified  .false.   is   returned.
+                            Otherwise,  the  character read is placed in
+                            "ch" and .true. is returned.
+
+               iopeek       looks to see if a character is in  the  type
+                            ahead  buffer.  If a character is available,
+                            it  is  placed  in  "ch"   and   .true.   is
+                            returned.  If  there  is  not a character in
+                            the type ahead buffer, .false. is  returned.
+                            Note  that  the  character is not read. This
+                            means that the next call to  iogchar()  will
+                            return    the    same   character   iopeek()
+                            returned.
+
+               iochav       tells if a  character  is  available  to  be
+                            read.
+
+               iogstr       attempts  to  get  a line of input. If it is
+                            successful, then "str"  contains  the  input
+                            characters   and   .true.   is  returned.  A
+                            maximum of  "maxlen"  minus  one  characters
+                            will  be  put  into "str", although more may
+                            have been read. The bell is  rung  when  the
+                            user  attempts to enter more characters than
+                            fit  in  "str".  The  returned   string   is
+                            terminated with an EOS character.
+
+                            Characters  are read up to and including the
+                            newline (which is not  returned  in  "str").
+                            The  user  can  erase characters with either
+                            delete or backspace.  Words  may  be  erased
+                            with  ^W.  The  entire  input  line  may  be
+                            killed with  ^U  or  ^X.  The  character  ^V
+                            escapes   the   special   meaning   of   any
+                            character  that   follows.   Other   control
+
+
+
+                                      - 2 -
+
+          iolb(lib)                  30Jun86                   iolb(lib)
+
+
+
+                            characters  that  are  input  are  echoed as
+                            visible sequences.
+
+                            If  the  user  attempts   to   delete   more
+                            characters  than have been input, .false. is
+                            returned.
+
+               iopstr       outputs a string  of  characters  terminated
+                            with EOS.
+
+               iopbuf       outputs "n" characters from "buf".
+
+               iopline      writes   out   characters   until  the  EOS;
+                            newlines  are   translated   into   carriage
+                            return line feed.
+
+               ioflush      flushes  the  output buffer. This routine is
+                            automatically called in various places,  but
+                            may be used manually too.
+
+               ioeat        flushes the type ahead buffer.
+
+               iocrlf       outputs a carriage return and line feed.
+
+               iospaces     outputs "num" spaces.
+
+               ioerror      terminates  an  iolb  program with a message
+                            and status value. The variable  "str"  is  a
+                            prilb  format string containing some integer
+                            conversion specifier such as "%d", "%x",  or
+                            "%o".
+
+               iofmtstr     formats  a  buffer  of characters to contain
+                            only    printable    characters.    Carriage
+                            returns,   line   feeds,   and   blanks  are
+                            compressed into a single blank.
+
+               ioautobroad  changes  iolb's  action  when   a   terminal
+                            broadcast    is    received.   By   default,
+                            broadcast   messages   are   simply   echoed
+                            verbatim.   By  calling  this  routine  with
+                            .false., it is possible for  user  to  fetch
+                            broadcast  messages using iogbroadcast() and
+                            make them synchronous with his program.  The
+                            old   setting   of   broadcast  messages  is
+                            returned.
+
+               iogbroadcast checks  to  see  if  a  terminal   broadcast
+                            message  is  available; if one is available,
+                            it  is  stored  in  "buf",  and  .true.   is
+                            returned. Otherwise, .false. is returned.
+
+
+
+
+
+
+                                      - 3 -
+
+          iolb(lib)                  30Jun86                   iolb(lib)
+
+
+
+
+               iovmserror   is   similar   to   ioerror()   except  that
+                            "status" is a VMS return  status  and  "str"
+                            is  a  prilb format string containing a "%s"
+                            that specifies where to put the  error  text
+                            for the return status.
+
+
+          SEE ALSO
+               sclb(lib), cdlb(lib), prilb(lib)
+
+
+          AUTHOR(S)
+               Jef Poskanzer and Craig Leres
+
+
+          BUGS/DEFICIENCIES
+               Yes, there are certainly bugs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 4 -
+
+ÿ

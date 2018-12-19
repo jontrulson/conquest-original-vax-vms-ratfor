@@ -1,0 +1,125 @@
+    # sclb.ic - internal include file for the screen package (src/sclb).
+    #nolist
+
+    # modification history
+    # ------------ -------
+    # V03F  28sep82  TH  Added seqgraphics, satgraphics
+    # V03E  30jul82  TH  Added inbuf, inbufp
+    # V03D  24jul82  TH  Added seqinit
+    # V03C  16jul82  TH  Added attg, attstrat, attgclear, attset
+    #                    Added internal values scnotilde, scvisdel, scbs,
+    #                      and scnoautonl.
+    #                    Removed seqdepill and seqenpill
+    #                    Removed pillmode
+    # V03B  13jul82  TH  Updated to correspond to new incl/sclb.c
+    #                    Added curatt and desatt
+    # V03A  14apr82  JP  Changed seqs array into separate strings for each
+    #                      function.
+    # V02B  28mar82  JP  Added pillmode.
+    # V02A  08dec80  JP
+
+    # attributes
+    logical curatt ( MAX_ATTRIBUTES )	# current attributes
+    logical desatt ( MAX_ATTRIBUTES )	# desired attributes
+    integer attg ( MAX_ATTRIBUTES )	# attribute groups
+    integer attstrat ( MAX_ATTRIBUTES )	# strategy for attribute n
+    integer attgclear ( MAX_ATTRIBUTES )# sequence to clear attribute group
+    integer attset ( MAX_ATTRIBUTES )	# sequence to set attribute
+
+    logical scnotilde			# no printable tilde
+    logical scvisdel			# delete is visible
+    logical scbs			# has back space (^H)
+    logical scnoautonl			# if noautonl set, dosn't advance at
+                                        # end of line
+
+    # control sequences
+    character seqatt ( MAXSEQLEN, MAX_ATTRIBUTE_SEQUENCES )
+					# sequences to change attributes
+    character seqbeep ( MAXSEQLEN )	# ring bell
+    character seqbol ( MAXSEQLEN )	# go to beginning of line
+    character seqcel ( MAXSEQLEN )	# clear to end of line
+    character seqchscroll ( MAXSEQLEN )	# change scrolling region
+    character seqclear ( MAXSEQLEN )	# clear screen and home
+    # character seqdepill ( MAXSEQLEN )	# exit pillow mode (soon obsolete)
+    character seqdlc ( MAXSEQLEN )	# delete character
+    character seqdll ( MAXSEQLEN )	# delete line
+    character seqdown ( MAXSEQLEN )	# cursor down
+    # character seqenpill ( MAXSEQLEN )	# enter pillow mode (soon obsolete)
+    logical satgraphics ( MAX_ATTRIBUTES, NUMBER_GRAPHICS_CHARS )
+    character seqgraphics ( MAXSEQLEN, NUMBER_GRAPHICS_CHARS )
+					# how to form special graphics chars
+    character seqhome ( MAXSEQLEN )	# home cursor
+    character seqiim ( MAXSEQLEN )	# go in insert mode
+    character seqikey ( MAXSEQLEN )	# go in keypad mode
+    character seqinc ( MAXSEQLEN )	# insert character
+    character seqinit ( MAXLINE )	# terminal initialization sequence
+    character seqinl ( MAXSEQLEN )	# insert line
+    character seqkey ( MAXSEQLEN, MAX_KEYPAD_KEYS )
+					# what keypad sends in keypad mode
+    character seqleft ( MAXSEQLEN )	# cursor left
+    character seqmove ( MAXSEQLEN )	# absolute cursor address
+    character seqoim ( MAXSEQLEN )	# go out of insert mode
+    character seqokey ( MAXSEQLEN )	# go out of keypad mode
+    character seqpillow ( MAXSEQLEN )	# pillow sequence
+    character seqright ( MAXSEQLEN )	# cursor right
+    character seqsdown ( MAXSEQLEN )	# scroll down
+    character seqsup ( MAXSEQLEN )	# scroll up
+    character seqtab ( MAXSEQLEN )	# tab
+    character sequp ( MAXSEQLEN )	# cursor up
+
+    # push back stack
+    integer inbufp			# number of characters in inbuf
+    character inbuf ( MAXSEQLEN )	# characters pushed back
+
+    # debug
+    logical debug			# debug mode?  if so don't abort
+
+    common /sclbi/ curatt,
+	desatt,
+	attg,
+	attstrat,
+	attgclear,
+	attset,
+
+	scnotilde,
+	scvisdel,
+	scbs,
+	scnoautonl,
+
+	seqatt,
+	seqbeep,
+	seqbol,
+	seqcel,
+	seqchscroll,
+	seqclear,
+	# seqdepill,
+	seqdlc,
+	seqdll,
+	seqdown,
+	# seqenpill,
+	satgraphics,
+	seqgraphics,
+	seqhome,
+	seqiim,
+	seqikey,
+	seqinc,
+	seqinit,
+	seqinl,
+	seqkey,
+	seqleft,
+	seqmove,
+	seqoim,
+	seqokey,
+	seqpillow,
+	seqright,
+	seqsdown,
+	seqsup,
+	seqtab,
+	sequp,
+
+	inbufp,
+	inbuf,
+
+	debug
+
+    #list

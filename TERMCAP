@@ -1,0 +1,151 @@
+# termcap - Software Tools termcap file (revision history at the end)
+
+20:h19|19|Heathkit H19:lins#24:cols#80:@
+    :beep=^G:autonl:clear=@EE:home=@EH:move=@EYl1c1:cel=@EK:@
+    :bs:right=@EC:up=@EA:down=^J:sup=^J:sdown=@EI:tab=^i:@
+    :inl=@EL:dll=@EM:iim=@E@@:oim=@EO:dlc=@EN:@
+    :att=-g=@EG:att=g=@EF:att=-r=@Eq:att=r=@Ep:pillow=(g)i:padc=@000:@
+    :lshigh:lsegud=(g)`:lsegrl=(g)a:lsegruld=(g)b:@
+    :lsegu=(g)`:lsegd=(g)`:lsegr=(g)a:lsegl=(g)a:@
+    :lsegld=(g)c:lsegul=(g)d:lsegru=(g)e:lsegrd=(g)f:@
+    :lsegrld=(g)s:lseguld=(g)t:lsegrul=(g)u:lsegrud=(g)v:@
+    :f1=@ES:f2=@ET:f3=@EU:f4=@EV:f5=@EW:@
+    :ikey=@E=:okey=@E>:k0=@E?p:k1=@E?q:k2=@E?r:k3=@E?s:k4=@E?t:k5=@E?u:@
+    :k6=@E?v:k7=@E?w:k8=@E?x:k9=@E?y:kenter=@E?M:kperiod=@E?n:@
+    :kup=@EA:kdown=@EB:kright=@EC:kleft=@ED:pclear#14:pinl#21:pdll#21:
+96:v1|vt1|vt100|100|DEC VT100|Digital Equipment VT100:lins#24:cols#80:@
+    :clear=@E[H@E[J:home=@E[H:move=@E[l2;c2H:@
+    :bs:right=@E[C:up=@E[A:down=@E[B:@
+    :pillow=(r) :@
+    :att=-h-u-r-b=@E[0m:att=h=@E[1m:att=u=@E[4m:att=r=@E[7m:att=b=@E[5m:@
+    :att=-g-a=@E(B:att=-ga=@E(A:att=g-a=@E(0:@
+    :ikey=@E=:okey=@E>:k0=@EOp:k1=@EOq:k2=@EOr:k3=@EOs:k4=@EOt:k5=@EOu:@
+    :k6=@EOv:k7=@EOw:k8=@EOx:k9=@EOy:f1=@EOP:f2=@EOQ:f3=@EOR:f4=@EOS:@
+    :kup=@E[A:kdown=@E[B:kleft=@E[D:kright=@E[C:@
+    :kcomma=@EOl:kenter=@EOM:kminus=@EOm:kperiod=@EOn:@
+    :xonoff:noautonl:beep=^G:cel=@E[K:chscroll=@E[%fn;%lnr:@
+    :sdown=@EM:sup=^J:tab=^I:@
+    :pcel#2.1:pclear#46.9:psdown#31.3:psup#31.3:lshigh:@
+    :lsegd=(g)x:lsegl=(g)q:lsegld=(g)k:@
+    :lsegu=(g)x:lsegud=(g)x:lsegul=(g)j:lseguld=(g)u:@
+    :lsegr=(g)q:lsegrd=(g)l:lsegrl=(g)q:lsegrld=(g)w:@
+    :lsegru=(g)m:lsegrud=(g)t:lsegrul=(g)v:lsegruld=(g)n:
+138:go|go140|GraphOn 140:lins#24:cols#80:@
+    :clear=@E[H@E[J:home=@E[H:move=@E[l2;c2H:@
+    :bs:right=@E[C:up=@E[A:down=@E[B:@
+    :pillow=(r) :@
+    :att=-h-u-r-b=@E[0m:att=h=@E[1m:att=u=@E[4m:att=r=@E[7m:att=b=@E[5m:@
+    :att=-g-a=@E(B:att=-ga=@E(A:att=g-a=@E(0:@
+    :ikey=@E=:okey=@E>:k0=@EOp:k1=@EOq:k2=@EOr:k3=@EOs:k4=@EOt:k5=@EOu:@
+    :k6=@EOv:k7=@EOw:k8=@EOx:k9=@EOy:f1=@EOP:f2=@EOQ:f3=@EOR:f4=@EOS:@
+    :kup=@E[A:kdown=@E[B:kleft=@E[D:kright=@E[C:@
+    :kcomma=@EOl:kenter=@EOM:kminus=@EOm:kperiod=@EOn:@
+    :xonoff:noautonl:beep=^G:cel=@E[K:chscroll=@E[%fn;%lnr:@
+    :sdown=@EM:sup=^J:tab=^I:@
+    :pcel#2.1:pclear#46.9:psdown#31.3:psup#31.3:lshigh:@
+    :lsegd=(g)x:lsegl=(g)q:lsegld=(g)k:@
+    :lsegu=(g)x:lsegud=(g)x:lsegul=(g)j:lseguld=(g)u:@
+    :lsegr=(g)q:lsegrd=(g)l:lsegrl=(g)q:lsegrld=(g)w:@
+    :lsegru=(g)m:lsegrud=(g)t:lsegrul=(g)v:lsegruld=(g)n:
+139:f100|freedom 100:lins#24:cols#80:@
+    :beep=@Eb@177@177@Ed:autonl:clear=^Z:home=^^:move=@E=l1c1:@
+    :bs:tab=^I:right=^L:up=^K:down=^J:sup=^J:@
+    :cel=@Et:pillow=(r) :@
+    :att=-g=@E%:att=g=@E$:att=-h-u-r=@EG0:@
+    :att=h=@EG@@:att=u=@EG8:att=r=@EG4:@
+    :lshigh:lsegd=(g)J:lsegl=(g)K:lsegld=(g)G:@
+    :lsegu=(g)J:lsegud=(g)J:lsegul=(g)H:lseguld=(g)G:@
+    :lsegr=(g)K:lsegrd=(g)F:lsegrl=(g)K:lsegrld=(g)N:@
+    :lsegru=(g)E:lsegrud=(g)M:lsegrul=(g)O:lsegruld=(g)I:
+143:sun|Sun Microsystems Workstation:lins#34:cols#80:@
+    :clear=^L:home=@E[H:move=@E[l2;c2H:@
+    :bs:right=@E[C:up=@E[A:down=@E[B:@
+    :att=-r=@E[0m:att=r=@E[7m:pillow=(r) :@
+    :xonoff:noautonl:beep=^G:cel=@E[K:@
+    :sdown=@EM:sup=^J:tab=^I:lshigh:
+142:tvi925|Televideo 925:lins#24:cols#80:@
+    :beep=^G:autonl:clear=^Z:home=^^:move=@E=l1c1:@
+    :bs:right=^L:up=^K:down=^J:sup=^J:
+141:c108|concept 108:lins#24:cols#80:@
+    :beep=^G:autonl:clear=@E?@E^E:home=@E?:move=@Eal1c1:@
+    :bs:tab=^I:up=@E;:down=^J:cel=@E^S:pillow=(r) :@
+    :att=-r=@Ed:att=-u=@Eg:att=-h=@Ee:@
+    :att=r=@ED:att=u=@EG:att=h=@EE:
+64:v5|vt5|vt52|52|DEC VT52|Digital Equipment VT52:lins#24:cols#80:@
+    :beep=^G:autonl:clear=@EH@EJ:home=@EH:move=@EYl1c1:cel=@EK:@
+    :bs:right=@EC:up=@EA:down=@EB:sup=^J:sdown=@EI:@
+    :pillow=(g)a:att=-g=@EG:att=g=@EF:
+21:mime|mime2a|Microterm Mime2A:lins#24:cols#80:@
+    :beep=^G:clear=^L:home=@EH:move=@EYl1c1:@
+    :bs:right=@EC:up=@EA:down=@EB:@
+    :pillow=(g)a:@
+    :att=-h=@ET:att=h=@ES:att=-g=@EG:att=g=@EF:@
+    :inl=^A:dll=^W:pclear#13.6:pinl#300:pdll#300:
+16:aa|ann|annarb|Ann Arbor:lins#40:cols#80:autonl:visdel:@
+    :xonoff:beep=^G:autonl:clear=^L^A^A:home=^K:move=^Oc3l3:@
+    :bs:right=^I:up=^N:down=^J:@
+    :sup=^J:psup#2:@
+    :pillow=()@177:padc=^A:
+18:3a|adm|adm3a|LSI Adm3A:lins#24:cols#80:@
+    :beep=^G:autonl:clear=^Z:home=^^:move=@E=l1c1:@
+    :bs:right=^L:up=^K:down=^J:sup=^J:
+19:haz|h1500|Hazletine 1500:lins#24:cols#80:notilde:@
+    :beep=^G:clear=~^\:home=~^Q^A^A:move=~^Qc0l0:bs:right=^P:up=~^L:down=~^K:
+17:hp|Hewlett-Packard?:lins#24:cols#80:@
+    :beep=^G:clear=@EE:home=@EH:bs:right=@EC:up=@EA:down=@EB:
+128:31|adm31|LSI Adm31:lins#24:cols#80:@
+    :beep=^G:clear=@E;:home=^^:move=@E=l1c1:bs:right=^L:up=^K:down=^J:@
+    :att=-h=@E(:att=h=@E):autonl:sup=^J:sdown=@EE:@
+    :inc=@EQ:dlc=@EW:inl=@EE:dll=@ER:iim=@Eq:oim=@Er:@
+    :psup#5.0:psdown#200.0:pinl#200.0:pdll#200.0:
+129:fox|Perkin-Elmer Fox:lins#24:cols#80:@
+    :beep=^G:clear=@EH@EJ:home=@EH:move=@EXl1@EYc1:bs:right=@EC:up=@EA:down=@EB:
+130:c100|concept|concept100|HDS Concept 100:lins#24:cols#80:@
+    :beep=^G:clear=@E?@E^C:home=@E?:move=@Eal1c1:bs:right=@E=:up=@E;:down=@E<:
+131:h52|h1552|Hazeltine 1552:lins#24:cols#80:@
+    :beep=^G:clear=@EM:home=@EH:move=@EYl1c1:@
+    :bs:right=@EC:up=@EA:down=@EB:@
+    :pillow=(g)a:@
+    :att=-h=@ET:att=h=@ES:att=-g=@EG:att=g=@EF:@
+    :ikey=@E=:okey=@E>:kup=@EA:kleft=@ED:kdown=@EB:kright=@EC:@
+    :k0=@E?p:k1=@E?q:k2=@E?r:k3=@E?s:k4=@E?t:@
+    :k5=@E?u:k6=@E?v:k7=@E?w:k8=@E?x:k9=@E?y:@
+    :kenter=@E?M:kperiod=@E?n:f1=@EP:f2=@EQ:f3=@ER:@
+    :cel=@EK:sdown=@EI:sup=^J:@
+    :tab=^I:inl=@EE:dll=@EO:@
+    :psdown#5.0:pinl#5.0:pdll#5.0:
+132:omni|Omni 800|Texas Instruments Omni 800:lins#66:cols#132:@
+    :beep=^G:overstrike:clear=^L:pclear#1467:pbol#195:bs:@
+    :right= :down=^J:pdown#30:sup=^J:psup#30:pbeep#84:
+133:s700|Silent 700|Texas Instruments Silent 700:lins#24:cols#80:@
+    :beep=^G:overstrike:clear=^M^J^J^J^J^J:pclear#165:pbol#195:bs:@
+    :right= :down=^J:pdown#33:sup=^J:psup#33:pbeep#250:
+134:aj|aj830|830|aj833|833|Anderson Jacobson 830/833:lins#66:cols#80:@
+    :beep=^G:overstrike:xonoff:clear=^L:bs:right= :down=^J:sup=^J:
+135:tk|tek|4006|tek4006|Tektronix 4006:lins#35:cols#80:@
+    :beep=^G:overstrike:bs:right= :down=^J:
+136:ti|ti745|Texas Instruments 745:lins#66:cols#80:@
+    :beep=^G:overstrike:bs:right= :down=^J:sup=^J:
+33:la120|la|120|Digital Equipment LA120:lins#66:cols#132:@
+    :beep=^G:overstrike:xonoff:clear=^L:bs:right= :down=^J:sup=^J:
+137:dumb:lins#24:cols#80:@
+    :beep=^G:autonl:bs:
+
+# termcap - Software Tools termcap file
+
+# ver  date   who remarks
+# --- ------- --- ------------------------------------------------------
+# 01w 28Mar86 cal .Added sun.
+# 01v 05Mar85 cal .Added tvi925.
+# 01u 30Dec84 cal .Added insert and delete line delays to the h19 entry.
+# 01t 07Dec84 cal .Added c108.
+# 01s 09Nov84 cal .Added f100. Added tab attribute to h19 entry.
+# 01r 11Oct84 cal .Added go140. Trimmed and reformatted revision history.
+# 01q 03Oct84 cal .Added dumb.
+# 01p 28Aug84 cal .Added ti745.
+# 01o 16Aug84 cal .Removed overzealous and buggy init sequence from the
+#                  vt100 entry.
+# 01n 01aug84 tab .Added attribute xonoff for AA.
+#
+# For details on the functions, see the manual entry.
+#

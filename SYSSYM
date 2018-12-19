@@ -1,0 +1,31 @@
+# syssym - many semi-random system-dependent symbols
+
+# ver  date   who remarks
+# --- ------- --- ------------------------------------------------------
+# 02e 25Aug86 cal .Moved in HOST_CHAR and DEV_CHAR from dirsym.
+# 02d 12Aug86 cal .Added NPROCESSES and NFOREGROUND.
+# 02c 13Jan84  rc removed #nolist, #list
+# 02b 04Nov83 cal Removed NEWREAD, SCRATCH, and PRINT.
+# 02A 12nov82 JP  Created by deleting garbage from ossym.
+
+define(LOGICAL_NAME_PREFIX,"RT_")	# prefix for all tools logical names
+define(HOST_CHAR,'%')		# prefix for hostname in filespec
+define(DEV_CHAR,'!')		# prefix for device name in filespec
+
+define(MAXARGS,50)		# max number of command line args allowed
+define(NNFILES,15)		# max number of files allowed open at a time
+define(NPROCESSES,8)
+define(NFOREGROUND,5)
+
+define(INPUTMODE,0)		# flag for mode of io
+define(OUTPUTMODE,1)
+
+define(CHARAC,0)		# definitions for openf calls
+define(LISTCC,0)
+define(FORTCC,1)
+define(OLDAGE,-1)
+define(UNKAGE,0)
+define(NEWAGE,1)
+
+define(NODEVICE,0)		# rat4 unit is not assigned
+define(TTYDEVICE,1)		# unit is assigned to tty device

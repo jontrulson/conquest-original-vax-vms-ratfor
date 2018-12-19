@@ -1,0 +1,121 @@
+
+
+
+
+          Conquest, Version: 4.22, 05Sep86
+
+          Authors: Craig Leres and Jef Poskanzer
+
+          Operating System: VAX/VMS V4.4
+
+          Abstract:     Conquest    is    a    multi-player    real-time
+          screen-oriented space war  game.  It  is  based  on  the  game
+          called  "empire"  on  the  PLATO  computer  system. It runs on
+          virtually any kind of cursor addressable crt.
+
+          This version includes many new features  and  bug  fixes.  One
+          important addition is computer controlled robot ships.
+
+          Note:  This distribution contains complete Ratfor game source.
+          But  since  Ratfor  isn't   a   standard   language,   FORTRAN
+          translations  are  also  provided.  The  game  also  relies on
+          Software Tools support routines; these are provided in  object
+          module form only.
+
+          Privileges  are  required  to install the game (but not to run
+          it). Elaborate restrictions on the game can  be  specified  by
+          the installer.
+
+          Here   is  a  list  of  the  files  that  make  up  the  Decus
+          distrubution of Conquest:
+
+              aaareadme.txt   this file
+              build.com       command file to make the binaries
+              cd1lb.mar       Macro 32 source for Craig's display library
+              cd2lb.for       rat4-generated FORTRAN source
+              cd2lb.r         Ratfor source for Craig's display library
+              cdcom           Ratfor include file for cd2lb
+              cddef           Ratfor include file for cd2lb
+              cdlb.doc        cdlb manual entry
+              conqai.for      rat4-generated FORTRAN source
+              conqai.r        Ratfor source for robot strategy run-time code
+              conqcm.com      command file to make the common block
+              conqcm.for      rat4-generated FORTRAN source
+              conqcm.r        Ratfor source for global common block
+              conqcom         common block include file for system
+              conqcom2        common block include file for conquest
+              conqdata        conqstrat-generated robot strategy data file
+              conqdef         symbols definition file
+              conqdriv.for    rat4-generated FORTRAN source
+              conqdriv.r      Ratfor source for driver program
+              conqfig.mar     Macro 32 configuration source
+              conqhist        ancient revision history
+              conqlb.for      rat4-generated FORTRAN source
+              conqlb.r        Ratfor source for support routines
+              conqmisc.for    rat4-generated FORTRAN source
+              conqmisc.r      Ratfor source for support routines
+              conqnews.doc    news file
+              conqoper.for    rat4-generated FORTRAN source
+              conqoper.r      Ratfor source for operators program
+              conqrules       conqstrat source for robot strategy
+              conqstrat.for   rat4-generated FORTRAN source
+
+
+
+
+
+
+
+              conqstrat.l     yacc-generated lex source
+              conqstrat.r     yacc/lex-generated Ratfor source
+              conqstrat.y     yacc/lex source for robot strategy compiler
+              conquest.for    rat4-generated FORTRAN source
+              conquest.man    manual entry
+              conquest.olb    object module library
+              conquest.r      Ratfor source for player program
+              conqutil.for    rat4-generated FORTRAN source
+              conqutil.r      Ratfor source for low-level support routines
+              conqvms.for     rat4-generated FORTRAN source
+              conqvms.r       Ratfor source for VAX/VMS support routines
+              enlb.c          Ratfor include file for sclb
+              enlb.for        rat4-generated FORTRAN source
+              enlb.r          Ratfor source for termcap and gamcron parsing routines
+              gamcron         list of valid times to play Conquest
+              gamlb.doc       gamlb manual entry
+              gamlb.for       rat4-generated FORTRAN source
+              gamlb.r         Ratfor source for game restriction library
+              install.doc     installation guide
+              iolb.doc        iolb manual entry
+              ioncom          Ratfor include file for ionlb
+              ionlb.for       rat4-generated FORTRAN source
+              ionlb.r         Ratfor source for non-portable part of raw-mode I/O library
+              ioplb.for       rat4-generated FORTRAN source
+              ioplb.r         Ratfor source for portable part of raw-mode I/O library
+              ioxlb.r         Ratfor source for replacement iogchar() and iogtimed() routines
+              ioxlb.for       rat4-generated FORTRAN source
+              rndlb.doc       rndlb manual entry
+              rndlb.for       rat4-generated FORTRAN source
+              rndlb.r         Ratfor source for random number library
+              sclb            Ratfor include file for sclb
+              sclb.c          Ratfor include file for sclb
+              sclb.doc        sclb manual entry
+              sclb.for        rat4-generated FORTRAN source
+              sclb.i          Ratfor include file for sclb
+              sclb.ic         Ratfor include file for cslb
+              sclb.r          Ratfor source for screen control package
+              syssym          Ratfor include file for gamlb
+              termcap         list of terminal characteristics
+              tslb            Ratfor include file for sclb
+
+          Questions and comments should be directed to:
+
+              Craig Leres                             Jef Poskanzer
+              Lawrence Berkeley Laboratory            UniSoft Systems
+              Real Time Systems Group, 46-1123        739 Allston Way
+              1 Cyclotron Road                        Berkeley, CA  94710
+              Berkeley, CA  94720
+
+              leres@ucbarpa.berkeley.edu              jef@lbl-rtsg.arpa
+
+
+ÿ

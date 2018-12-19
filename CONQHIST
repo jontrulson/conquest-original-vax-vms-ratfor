@@ -1,0 +1,591 @@
+###############################################################################
+#
+#                             C O N Q H I S T
+#
+#            Copyright (C)1983-1986 by Jef Poskanzer and Craig Leres
+#
+#    Permission to use, copy, modify, and distribute this software and
+#    its documentation for any purpose and without fee is hereby granted,
+#    provided that this copyright notice appear in all copies and in all
+#    supporting documentation. Jef Poskanzer and Craig Leres make no
+#    representations about the suitability of this software for any
+#    purpose. It is provided "as is" without express or implied warranty.
+#
+###############################################################################
+#
+#	A continuation of the revision history that lives in "incl/conqdef"
+#
+###############################################################################
+#
+# 4.13 24Sep85 CAL .Executeai(): Always zero slock when setting course.
+#                  .Doautopilot(): Clear both message lines when prompting.
+#                  .Newship(): Zero saction since we're never a robot.
+#                  .Initrobots(): Make new robots multiples.
+# 4.12 23Sep85 CAL .Secdrive(): Don't do robot stats for autopiloted ships.
+#                  .Doautopilot(): Zero saction when done so isn't displayed.
+#                  .*(): Add enemy damage variable.
+# 4.11 16Sep85 CAL .*(): Add robot autopilot.
+# 4.10 15Sep85 CAL .*(): Add last robot action variable.
+# 4.09 13Sep85 CAL .Playlist(): Modified to handle multiple screens. Removed
+#                   opplaylist() and doplaylist().
+#                  .Userlist(), userstat(): Make TERM_EXTRA return to the
+#                   first page.
+# 4.08 09Sep85 CAL .*(): Add code to allow robots to read and reply to messages.
+# 4.07 08Sep85 CAL .Ever more robot AI hacking. Nuke old robot code (finally).
+#                   Rearrange the common block to get robot stuff in the right
+#                   place.
+#                  .Conqstats(): Don't add robot stats to team stats.
+# 4.06 07Sep85 CAL .Findspecial(): If at peace with all teams, consider
+#                   unscanned planets when looking for fuel or repairs.
+# 4.05 06Sep85 CAL .More robot AI hacking.
+# 4.04 02Sep85 CAL .Robot AI hacking.
+# 4.03 15Jun85 CAL .Mail hacking; added mail_tools() and mail_dcl().
+# 4.02 27Apr85 CAL .Use new strcpy() instead of stcp macro.
+# 4.01 03Nov84 CAL .Doomdisplay(): Add missing argument to cdputn().
+# 4.00 12Sep84 CAL .*(): Include file name hacking.
+# 3.99 08Sep84 JP  .Dodet(), domydet(): Clear second message line.
+# 3.98 25Jul84 CAL .Increased maximum tractor warp difference.
+# 3.97 19Jul84 CAL .*(): Modified to use new iolb routine names.
+# 3.96 16Jul84 CAL .*(): Changed usage of iobeep() to scbeep().
+# 3.95 09Jul84 CAL .Command(): Always set credaw before executing the command.
+# 3.94 08Jul84 CAL .Doselfdest(): Get entry time stamp before the display().
+#                  .Command(), dosubdcl(): Update the display while comfirming.
+#                  .Drcreate(): Can't default the sub-process priority since
+#                   it's passed as a value and so defaults to 0.
+# 3.93 04Jul84 CAL .*(): Added new satwar() and selfwar() macros.
+# 3.92 03Jul84 CAL .Opedit(): Add more ways to exit.
+#                  .Dodistress(): Add engines and weapons down.
+# 3.91 26Jun84 CAL .Menu(): Fixed bug which prevented resignation.
+#                  .Teamlist(): Coup info hacking.
+# 3.90 18Jun84 CAL .*(): Modified to use new pvlb.
+# 3.89 17Jun84 CAL .*(): Rewrote cpu and elapsed statistics keeping. Cpu time
+#                   is now kept for robots. Added common block rev level.
+#                  .Grand(), dgrand(): New time routines.
+#                  .gtenths(), dtenths(): Removed old routines.
+# 3.88 16Jun84 CAL .Getdandt(): Removed hundreths.
+#                  .*(): Added user the history list.
+# 3.87 14Jun84 CAL .Command(), play(): Move message disabling code into play().
+# 3.86 13Jun84 CAL .Docourse(): Can't set course accurately for a cloaked ship.
+#                  .Statline(): Show user stats (finally).
+# 3.85 12Jun84 CAL .Command(): Can't repair while cloaked.
+#                  .*(): Extensively modified userlist() and userstats().
+#                  .Statline(): New routine for userstats().
+#                  .Stillalive(): Corrected failing logic.
+#                  .Ikill(): Turn robots off when killing them.
+#                  .Secdrive(): Don't worry about dead robots anymore.
+# 3.84 11Jun84 CAL .Docourse(): Can't set course for a silent running ship.
+# 3.83 09Jun84 CAL .Pagefile(): More work on control-L handling.
+#              &&  .Newship(), newrob(): Nuke ENTRY_PAST_SUN_FACTOR.
+#              JP  .*(): New usefuel(). Add weapons/engines down and new
+#                   cool down constants.
+# 3.82 07Jun84 CAL .*(): Use dtenths() to decide if it's new message time.
+# 3.81 02Jun84 CAL .Vowel(): Converted into a macro.
+# 3.80 01Jun84 CAL .*(): Added weapons temperature.
+# 3.79 28May84 CAL .Secdrive(): Try to timeout reserved ships too.
+#                  .Menu(), findship(): Initialize ssdfuse.
+# 3.78 27May84 CAL .Secdrive(): Removed unnecessary test.
+#                  .Drcreate(): Can't make the driver run at a priority
+#                   higher than our own, so don't bother trying.
+#                  .Gsecs(), gtenths(), dsecs(), dtenths(): New routines for
+#                   handling time.
+#                  .*(): Modified to use gsecs(), gtenths(), dsecs(), dtenths().
+#                  .Midtim(), timdif(): Removed unused routines.
+# 3.77 04Apr84 CAL .Mail(): Always delete the frigging mailbox...
+# 3.76 31Mar84 JP  .Display(): Always give yellow alerts for scanned enemies.
+# 3.75 14Mar84 CAL .*(): Buffer length hacking for input strings.
+#                  .Watch(): Call opinfo() with GOD's number.
+#                  .Dowar(): When changing war settings, only update the
+#                   display once per second.
+#                  .Doomdisplay(): Add distance to target and clean up.
+#                  .Operate(): Get confirmation when closing the game.
+#                  .Debugdisplay(): Don't clear the message lines.
+#                  .Teamlist(): Show coup time for teams that know it.
+#                  .Opinit(): Add lockword clearing.
+# 3.74 10Mar84 CAL .Dodistress(): Temperature over 99 should be displayed "**".
+#                  .Findspecial(): Consider uninhabitable time when looking
+#                   for weak planets.
+#                  .Raised class D crisis from 60 to 70.
+# 3.73 08Mar84 CAL .Oppedit(): Require a line feed to make string changes.
+#                  .*(): Corrected various spelling errors.
+# 3.72 07Mar84 CAL .Dowar(): Require line feed to make a change in team
+#                   alignment. Use display() manually to avoid typeahead
+#                   problems in the computer delay loop.
+#                  .Dispoption(): Change prompt message.
+#                  .Dooption(): Require a line feed to make string changes.
+#                  .Clearships(), initmsgs(): New initialization routines.
+#                  .Preinit(): Renamed to opinit() and expanded to handle
+#                   new initialization routines.
+#                  .Initall(): Modified to use new initialization routines.
+# 3.71 05Mar84 CAL .Findorbit(), iterdrive(): Reduce maximum orbit entry
+#                   distance from PLANET_DIST to ORBIT_DIST to avoid jumps.
+#                  .Dead(): Berate the user if he bails with armies on board.
+# 3.70 04Mar84 CAL .Dowar(): Unnecessary to fool with asts around iotget().
+#                  .Psuedo(), opuedit(): Allow zero length names if linefeed
+#                   is used as the terminator.
+# 3.69 03Mar84 CAL .Dosubdcl(): Allow display() to get in while prompting.
+# 3.68 29Feb84 CAL .Infoship(): Avoid subscript problem with snum.
+# 3.67 26Feb84 CAL .Acdist(): Fixed a stupid bug in the distance formula and
+#                   suddenly the autopilot becomes a precison device.
+#                  .Dowar(): Enable asts while waiting for a character so
+#                   the display will work.
+# 3.66 23Feb84 JP  .Display(): Don't give yellow alerts for selfwars unless
+#                   they are close to us.
+# 3.65 22Feb84 CAL .Sendmsg(): Implement last message editing.
+#                  .Appnumtim(): New routine to format English time.
+#                  .Doinfo(): Modified to use appnumtim().
+#                  .Opinfo(): Current use of buf required it to be larger.
+#                   Modified to use appnumtim().
+#                  .Dobomb(), dobeam(): Cannot call cdgetx() with the same
+#                   prompt and input buffer anymore.
+#                  .Teamlist(): Always clear the lastwords line to avoid a mess
+#                   when someone is entering new lastwords.
+#                  .Newship(): Clear srobot since we never want to be a robot.
+# 3.64 20Feb84 CAL .Takeplanet(): Zero lastwords when conquering the universe.
+#                  .Play(), initship(): Put ulastentry time stamp in initship().
+#                  .Defend(), newrob(): Don't consider robots who have the
+#                   disable option.
+#                  .Doselfdest(): Requre an escape to abort self destruction.
+#                  .Debugdisplay(): General display hacking.
+#                  .Capentry(): Abort for carriage return too.
+# 3.63 19Feb84 CAL .Infoplanet(): Removed time of day hack.
+#                  .Appnum(): New routine to format time in English.
+#                  .Doinfo(): Info on "time" displays time of day.
+#                  .Dobomb(): Doesn't hurt to always set ssrpwar when bombing.
+#                  .Spwar(): Always return ssrpwar when not a team planet.
+#                  .Operate(): Kill each ship before zeroing it to force
+#                   stats to be updated. Modified to call opconst(), opuedit(),
+#                   opuadd(), oppedit() instead of uedit(), options(), uadd(),
+#                   and oppedit().
+#                  .Uedit(), options(): Merged code into opuedit() and removed.
+#                  .Opconst(): New routine for tuning constants.
+#                  .Uadd(): Renamed to opuadd().
+#                  .Opuadd(): Renamed from uadd().
+# 3.62 18Feb84 CAL .Infoplanet(): Fixed team coup info (finally).
+#                  .Canread(): Can read messages to the implementors if
+#                   we have the GOD messages option.
+# 3.61 17Feb84 CAL .Initship(), menu(), newrob(): Initialize the right
+#                   ship variables in the right places.
+#                  .Infoplanet(): Info on a sun includes time of day now.
+#                   Modified to put the cursor at the beginning of the line.
+#                  .Infoship(): Put the cursor at the beginning of the line.
+#                  .Watch(): Clear the message lines before prompting.
+# 3.60 15Feb84 CAL .Zeroship(): New routine to completely zero a ship.
+#                  .Operate(): Modified to clear ships with zeroship().
+#                  .Findship(): Modified to use zeroship().
+#                  .Initship(): Reorganized.
+#                  .Drkill(): New routine to kill the driver.
+#                  .Drpexit(): Moved some code into the new drkill() routine.
+#                  .Menu(): Try to kill the driver if the user stays in the
+#                   menu very long after playing.
+# 3.59 14Feb84 CAL .Display(): Always show torp symbols in the strategic map.
+#                  .Dead(): Loop hacking to avoid locking the terminal up.
+#                  .*(): Replace sterm and cterm with spid and cpid.
+# 3.58 11Feb84 CAL .Iterdrive(): Fixed old ship ordering bug. Also, keep
+#              &&   track of elapsed time for robots.
+#              JP  .Secdrive(): Fixed old ship ordering bug.
+#                  .Debugdisplay(): Display sterm.
+#                  .*(): Remove references to reincarnation.
+#                  .Play(), conquest(): Kill the driver at image exit time
+#                   instead after each ship.
+#                  .Drpexit(): Try to wait for the driver to exit.
+# 3.57 05Feb84 CAL .*(): Added sterm to keep track of a ships terminal name
+#                   and resolve some long standing ambiguities.
+# 3.56 27Jan84 CAL .Pagefile(): Don't pause for formfeeds at the beginning
+#                   of a page.
+#                  .Docoup(): Always allow team coup info when attempting
+#                   a coup.
+# 3.55 22Jan84 CAL .Conqdriv(): Call iterdrive() at end of loop.
+# 3.54 21Jan84 CAL .Newship(), newrob(): Enter outside home planet if it
+#                   isn't orbiting the home sun.
+#                  .Dountow(): Display a message if there's nothing to do.
+#                  .Astservice(), operate(): Un-read a message if a character
+#                   is ready to be read.
+# 3.53 17Jan84 CAL .Dountow(): Let untractored ships coast to a stop.
+#                  .Dodistress(): Report temperature (since it's important now).
+# 3.52 16Jan84 CAL .Orbit(): Silly bug; was using wrong planet number index.
+#                  .Infoplanet(): Silly bug; can't access snum when GOD.
+#                  .Opinfo(): Use correct number of arguments to gplanmatch().
+#                  .Doreview(): Loop hacking.
+# 3.51 15Jan84 CAL .Findspecial(): Bogus case in switch broke army threshold.
+#              &&   Don't consider uninhabitable planets weak.
+#              JP  .Docourse(): Fixed bug with uninitialized variable.
+#                  .Infoplanet(): Check for planet number bounds.
+#                  .Usefuel(): Base engine explosion messages on terse option.
+#                  .Review(): Show outbound messages when reviewing.
+#                  .Dead(): Needed to clear the screen at the top of the
+#                   conquer the universe loop.
+#                  .*(): General hacking to catch dead ship timeout problems.
+#                  .*(): Implement default weapons direction.
+#                  .Menu(): Allow switch teams when entries is zero.
+# 3.50 14Jan84 CAL .Iterdrive(): Move ship speed calculation into fixdeltas()
+#                   and doomsday speed calculation into secdrive(). Also,
+#                   repair shields twice as much if they're down.
+#                  .Fixdeltas(): Multiply in ship speed calculation.
+#                  .Secdrive(): Move in doomsday speed calculation.
+#                  .Dotow(): Can't tractor if relative speed is too high.
+# 3.49 13Jan84 CAL .Dountow(): New command to un-tractor ships.
+#                  .Dotow(): Modified to only handle tractoring.
+#                  .Operate(), conqds(): Modified to use dountow().
+# 3.48 10Jan84 CAL .Command(): Modified to not use dorepair().
+#                  .Dorepair(): Removed unused routine.
+#                  .*(): Modified conqdriv to execute ships in random order.
+#                  .Created src/conqmisc and moved many routines in
+#                   from src/conqlb.
+#                  .Created incl/conqhist and moved many lines of revision
+#                   history in from incl/conquest.
+# 3.47 09Jan84 CAL .General tuning.
+#                  .Robot(): Don't talk to planets.
+#                  .Readmsg(): Format planet names for the to field.
+#                  .Defend(): New routine to create robot ships to defend
+#                   the home system.
+#                  .Intrude(): Modified to call defend().
+#                  .Initeverything(): Modified to create robot guardians.
+#                  .Infoplanet(): Don't tell if hostile unless team scanned.
+# 3.46 08Jan84 CAL .Usefuel(): Engines can't blow up if no fuel was used.
+#                  .Secdrive(): Don't call usefuel() with 0.0.
+# 3.45 06Jan84 CAL .Phaserhit(): New routine to return phaser damage.
+#                  .Phaser(): Modified to use phaserhit(). Set up the
+#                   slastphase variable properly.
+#                  .Dophase(): Don't worry about slastphase.
+#                  .Robot(): Change weapons strategy to choose based on damage
+#                   to enemy ship. Also base enemy torpedo detonate logic on
+#                   damage. Add desire to detonate own torpedos. Added some
+#                   repair logic and code to reply to ship messages.
+#                  .Secdrive(): Turn off warp drive and cloaker when in
+#                   repair mode. Also, turn off repair mode if cloaked.
+#                  .Dorepair(): Only need to turn on mode now.
+#                  .Getamsg(): New routine to find a readable message.
+#                  .*(): Modifed N routines to use getamsg.
+#                  .findship(): Initialize a few more ship variables.
+# 3.44 04Jan84 CAL .Phaser(): Changed into a function and modified to
+#                   test spfuse before firing.
+#                  .Dophase(), dolastphase(): Modify to use new phaser().
+# 3.43 01Jan84 CAL .Robot(): Untractor if not at war and change minimum
+#                   detonate range in an attempt to detonate more torps.
+#                  .Newrob(): Always turn on intruder alerts.
+#                  .Secdrive(), display(): Use negative values in ssdfuse
+#                   to indicate dead timeout but don't display them.
+#                  .Ikill(): Ssdfuse hacking and set ship war when setting
+#                   sticky war.
+# 3.42 31Dec83 CAL .Robot(): The strategy improves; add code to detonate.
+#                  .Enemydet(): New routine to detenote enemy torpedos.
+#                  .Dodet(): Modified to use enemydet().
+#                  .Doinfo(): Fixed bug with finding second nearest thing.
+# 3.41 30Dec83 CAL .Robot(): Added first basic strategy.
+#              &&  .Phaser(), launch(): Turn off ship repair mode.
+#              JP  .Dophase(), dotorp(), doburst(): Don't worry about ship
+#                   repair mode.
+#                  .Findspecial(): New routine that finds things.
+#                  .Special(): Moved thing-finding code to findspecial().
+#                  .Docourse(), doinfo(): Modified to use findspecial()
+#                   and special().
+#                  .Cloak(): New routine to engage the cloaking device.
+#                  .Docloak(): Moved cloaking code into cloak():
+#                  .Secdrive(): Use ssdfuse to timeout dead ships. Always
+#                   turn off dead robot ships.
+#                  .Ikill(), dead(): Use ssdfuse to timeout dead ships.
+# 3.40 27Dec83 CAL .Newrob(): Added code to check for multiple rules and
+#                   turn on and place ship on if successful.
+#                  .Oprobot(): New routine used to create a robot ship.
+#                  .Operate(), opback(): Modified to handle oprobot().
+#                  .Newship(): Reordered to prevent possible sstatus race.
+#                  .Dead(): Call sleep() at the end of the torpedo delay loop.
+# 3.39 25Dec83 CAL .Enlarged srstrat to handle more than one strategy.
+#                  .Moved some constants into the common for easier tuning.
+#                  .Initship(): Initialize srstrat.
+#                  .Canread(): New routine to tell if a message is readable.
+#                  .Readmsg(): Changed into a subroutine which simply displays
+#                   a message and modified to use canread().
+#                  .Astservice(), review(), operate(), watch(): Modified to
+#                   use canread().
+# 3.38 24Dec83 CAL .Robot(): New routine to drive robot ships; currently it's
+#                   just a nonoperative skeleton. Created src/conqrob.
+#                  .Newrob(): New routine to create a robot ship.
+#                  .Secdrive(): Modified to call conqrob.
+# 3.37 20Dec83 CAL .*(): Changed name of SPEED_FAC to MM_PER_SEC_PER_WARP,
+#                   which stands for mega-meters per second per warp.
+#                  .Engeff(): New routine to calculate engine efficiency.
+#                  .Weaeff(): New routine to calculate weapon efficiency.
+#                  .*(): Modified many routines to use engeff() and weaeff().
+#                  .Newarp(): Engine efficiency now affects acceleration.
+#                  .Iterdrive(): Remove engine allocation factor from distance
+#                   traveled calculation. Call acdist() with engine efficiency
+#                   factored into acceleration.
+#                  .Acdist(): Multiply by MM_PER_SEC_PER_WARP to convert to
+#                   distance (mega-meters) and (hopefully) fix the autopilot.
+# 3.36 19Dec83 CAL .Iterdrive(): Took fudge factor out of autopilot slow down.
+#                  .Debugdisplay(): Added distance to target when locked on.
+# 3.35 14Dec83 CAL .Secdrive(): Call usefuel() with decrement only, thus
+#                   reintroducing engine temperature based on speed, etc.
+#                  .Acdist(): Fixed sign bug that was causing the autopilot
+#                   to frequently overshoot the target planet.
+# 3.34 10Dec83 JP  .*(): Added new routine usefuel(), changed routines to use
+#                   it instead of looking at sfuel.
+# 3.33 02Dec83 CAL .Inituniverse(): Initialize the rest of chrplanets().
+# 3.32 30Nov83 CAL .Play(): Update claststat for every conqstat() call.
+# 3.31 29Nov83 CAL .Initgame(): Zero drivsecs.
+#                  .Takeplanet(): Reverse (i.e. correct) sense of common
+#                   block locking for call to initgame().
+#                  .Newship(): Remember scloaked when reincarnating.
+#                  .Operate(): Add the GOD info command
+#                  .Display(): Fixed bounds test for course when locked on.
+# 3.30 17Nov83 CAL .Operate(): Remove a bunch of stuff.
+#                  .Opstat(): Add a bunch of stuff.
+#                  .Lowered base phaser hit to 92.0.
+#                  .*(): Corrected random spelling errors.
+#                  .Sendmsg(): Fixed string bug when sending team messages.
+#                  .Dooption(): Add an argument (and make choption obsolete).
+#                   Fix bugs with changing options.
+#                  .Choption(): Removed.
+#                  .Menu(): Modified to use dooption().
+#                  .Play(): Pass new arguments to dooption().
+# 3.29 16Nov83 CAL .Conqstat(): Fixed stupid bug with team elapsed time.
+# 3.28 14Nov83 CAL .Docourse(): Fixed race when locking on by setting up the
+#                   shead() before slock().
+#                  .Display(): Check bounds of the planet number when displaying
+#                   heading.
+#                  .Conqstat(): New routine to handle incremental additions
+#                   to the elapsed and cpu time statistics.
+#                  .Play(), conqend(): Modified to use conqstat().
+#                  .Uedit(): Look for zero length usernames, but don't allow
+#                   changing a username to a zero length.
+#                  .Options(): Don't change extra options.
+# 3.27 13Nov83 CAL .*(): Moved team and user stats into a common array.
+#                  .Pagefile(): Added parameters and features for the tutorial.
+#                  .Infoplanet(): Report uninhabitable and coup time.
+#                  .Doinfo(), conqinit(): Keep track of last info string.
+#                  .Zeroeverything(): New routine to zero the common block.
+#                  .Initeverything(): Modified to use zeroeverything().
+#                  .Comsize(): New routine to return the size of the common
+#                   block.
+#                  .Opstats(): Output more stuff, including size of common.
+#                  .Fmtminutes(): New routine to format a minutes string.
+#                  .Userline(): Modified to use fmtminutes() instead of
+#                   fmtseconds().
+# 3.26 12Nov83 CAL .Initstats(): New routine to initialize the statistics timer.
+#                  .Getstats(): New routine to collect statistics.
+#                  .Conqinit(): Modified to call initstats().
+#                  .Conqend(): Modified to call getstats().
+#                  .Drivinit(): New initialization routine for conqdriv.
+#                  .Drivend(): New clean up routine for conqdriv.
+#                  .Conqdriv(): Modified to call drivinit() and drivend().
+#                  .Conqfig: Add string for c_conq_tutorial.
+#                  .Menu(): Add tutorial command.
+#                  .Conqtut(): New routine to handle the tutorial.
+#                  .*(): Added MONDO new statistics.
+#                  .Userstats(): New routine to display new user statistics.
+#                  .Command(), help(), menu(): Add new user stats command.
+#                  .Drpexit(): Don't call upchuck().
+#                  .Upchuck(): Lock the common while updating.
+#                  .Zeroplanet(): Added snum as an argument.
+#                  .Secdrive(): Call zeroplanets() with its new argument. Also,
+#                   only send a over-temperature message if the ship survived.
+#                  .Dobeam(): Call zeroplanets() with its new argument.
+#                  .Initeverything(): Zero the common block with cdfill() first.
+#                  .*(): Turned terms() into a define.
+#                  .Stillalive(): Needed to check for SS_ENTERING too...
+#                  .Opstats(): New routine to display new statistics.
+#                  .Fmtseconds(): New routine to format a seconds string.
+#                  .Operate(): Use fmtseconds() to display play and drive times.
+#                   Remove upchuck command and add command to call opstats().
+#                  .Conqds(): Add tutorial and new user stats commands.
+# 3.25 11Nov83 CAL .Aston(): New routine to enable asts (replaces a macro).
+#                  .Astoff(): New routine to disable asts (replaces a macro).
+#                  .Mailimps(): New routine to send a one liner to the
+#                   Implimentors using mail().
+#                  .Sendmsg(): Modified to use mailimps() instead of mail().
+#                  .Isagod(): New routine to determine if a user is a god.
+#                  .Conqdriv(), conqoper(), userline(): Modified to use isagod()
+#                   to test for gods.
+#                  .Iterdrive(): Let "terse" control "insertion" messages too.
+# 3.24 10Nov83 CAL .Iterdrive(): Don't send orbiting messages if "terse" is set.
+#                  .Command(): Use soption() instead of uoption() to get "terse"
+#                   option when sending messages.
+#                  .Readmsg(): Use soption() instead of uoption().
+#                  .*(): Used f77 to find and remove unused variables.
+# 3.23 09Nov83 CAL .*(): Uplaying() is obsolete now; instead, test for sstatus()
+#                   being SS_LIVE or SS_ENTERING.
+#                  .ikill(): New internal routine to kill a ship. Assumes that
+#                   the common block is locked.
+#                  .kill(): Now, lock the common, call ikill() and unlock.
+#                  .Takeplanet(): Use ikill() and remove need to unlock common.
+# 3.22 07Nov83 CAL .Newship(): Use SS_ENTERING in new uplaying logic.
+# 3.21 06Nov83 CAL .Conqdriv(): Update the common block every minute. Somehow,
+#                   the call in fivemindrive() got misplaced...
+# 3.20 03Nov83 CAL .Iterdrive(): Adjust swarp (not sdwarp) when necessary
+#                   but call fixdeltas() every time we change warp.
+#                  .Secdrive(): Lower sdwarp at over-temperature explosions.
+#                   Also, use desired warp when figuring engine temperature.
+#                  .Newarp(): Pass desired warp to handle damaged ships.
+#                  .*(): Added the integer umultiple to keep track of the
+#                   number of ships a multiple is allowed to fly at one time.
+#                  .Increased the Doomsday machines firepower.
+#                  .Dobomb(): Call drcheck() inside loop.
+# 3.19 02Nov83 CAL .Conqinit(), drcheck(): Move static lastime into the common.
+# 3.18 01Nov83 CAL .Debugplan(): Don't display uninhabitable time if zero.
+#                  .Newarp(): New (linear) acceleration formula, also change
+#                   for use in iterdrive().
+#                  .Acdist(): New routine to figure distance traveled during
+#                   changes in velocities.
+#                  .Iterdrive(): Moved out ship acceleration code.
+#                  .Secdrive(): Moved in ship acceleration code. Modified
+#                   autopilot code to handle new acceleration formula.
+#                  .Increased length of the Doomsday machine.
+# 3.17 30Oct83 CAL .Dowarp(): Don't stop repairing when changing to warp 0.
+# 3.16 24Oct83 CAL .Drcreate(): Added the variable drivuniq to make the
+#                   driver name even more unique.
+#                  .Initgame(), inituniverse(): Moved the driver initialization
+#                   code out of initgame() and added initialization of drivuniq.
+# 3.15 23Oct83 CAL .*(): Added a buffer to conqco and modified many routines
+#                   to use it instead of their own private buffer.
+#                  .Welcome(): Moved out initialization code to menu().
+#                  .Menu(): Modified to do minor ship initialization. Now
+#                   checks to make sure the ship is reserved and tries to
+#                   reserve a new ship if possible. Modified to watch for
+#                   the closed flag and update the display if it changes.
+#                  .Inituniverse(): New acceleration constants.
+#                  .Newarp(): New acceleration constants and formula.
+#                  .Infoship(): Print out pseudonym in new two line format.
+#                  .Infoplanet(): Minor format changes to be like infoship().
+#                  .Review(): Modified to clear the bottom line for each
+#                   messages to force a redraw of the more prompt every time.
+#                  .Dead(): Modified to use iotget() and stillalive().
+#                  .Doreview(): Modified to use iotget() and stillalive().
+# 3.14 22Oct83 CAL .Increased MAXMESSAGES.
+#                  .Subang(): New routine to subtract two angles.
+#                  .Readmsg(): New message type; now you can get messages
+#                   from your ship's computer. Also Modified to clear the
+#                   second messages line.
+#                  .Iterdrive(): Fixed the tow bug, now the angle to towed
+#                   ships changes slowly. Rehacked direction changing code.
+#                   Implemented planet approach autopilot. Added orbit speed
+#                   limit.
+#                  .Secdrive(): Added a message from Comp when engines overheat.
+#                  .*(): Personalized many ship messages.
+#                  .Doorbit(): Added orbit speed limit.
+#                  .Findorbit(): New routine to locate a planet for a ship
+#                   to orbit.
+#                  .Orbit(): Modified not look for a planet, but simply do
+#                   the work of placing a ship into orbit. Hacked to prevent
+#                   orbit jumping.
+#                  .Display(): Display warp to one decimal place.
+# 3.13 21Oct83 CAL .Bigbang(): New operator routine that fires torps from all
+#                   ships.
+#                  .Opback(), operate(): Modified to know about bigbang().
+#                  .Watch(): Call cdredo() in a few places.
+#                  .Pagefile(): Changed usage of pathopen() to open().
+# 3.12 20Oct83 CAL .Drcreate(): Use cpriority when creating the driver process.
+#                  .Changed driver iteration to one tenth of a second.
+# 3.11 19Oct83 CAL .*(): Added a seperate lockword for messages.
+#                  .Putship(): Change retry limit to 20 and expand entry
+#                   area as we approach this limit.
+#                  .Drstart(), drcheck(): More driver logic hacking.
+#                  .Drcreate(): Driver logic hacking. Also, make the driver
+#                   name unique to avoid duplicate process names.
+#                  .Conqdriv(): Don't call upchuck() unless the players have
+#                   timed out to shorten the time it takes the driver to exit.
+#                  .Mail(): Use integer*2 to get at bottom short word of pid.
+#                  .Readmsg(): Don't force a clear line.
+# 3.10 18Oct83 CAL .Dead(): Unset sticky war to prevent problems in menu().
+#                  .Welcome(): Unset sticky war to prevent problems in menu().
+# 3.09 16Oct83 CAL .Dosubdcl(): Wasn't saving ccabort in the proper place.
+#                  .Capentry(): Modified to use iotget() and stillalive().
+#                  .Dooption(): Modified to use iotget() and stillalive().
+#                  .Choption(): Modified to use iotget() and stillalive().
+#                  .Dobeam(): Modified to use iotget().
+#                  .Conqdriv(), initgame(): Added drivowner to keep track
+#                   of the username of the drivers owner.
+#                  .Operate(): Display drivowner and the Doomsday target.
+#                  .Putship(): New routine to randomly position a ship; care
+#                   is taken to prevent entering too closely to an enemy.
+#                  .Newship(): Modified to use putship(). Also, start out
+#                   with swarp equal to 0.0 instead of sdwarp.
+#                  .Drcreate(): Can't call cerror(); instead, return a status.
+#                  .Drcheck(): Modified to check status from drcreate().
+#                  .Drstart(): Modified to check status from drcreate().
+# 3.08 15Oct83 CAL .Newarp(): New skeleton routine for ship acceleration.
+#                  .Secdrive(): Modified to use newarp().
+#                  .Dowar(): Modified outer while loop to use stillalive()
+#                   and iotget() instead of ioget(). Also modified to allow
+#                   use from menu() by not delaying if the ship is reserved.
+#                  .Menu(): Added code to call dowar() to change war and peace.
+#                  .Conqds(): Display command to change war and peace.
+# 3.07 13Oct83 CAL .Dohelp(): New argument subdcl makes the inclusion of
+#                   "conqco.c" unnecessary. Corrected iotget() loop logic.
+#                  .Command(): Pass new argument to dohelp().
+#                  .Welcome(): New arguments snum and unum make the inclusion
+#                   of "conqco.c" unnecessary.
+#                  .Menu(): Pass new arguments to welcome(). Restored test
+#                   of cleave to end of loop.
+#                  .Stillalive(): Needed to use suser(snum) instead of
+#                   steam(snum) in a couple places. Modified logic to
+#                   handle both live and reserved ships.
+#                  .Doteamlist(), doplanlist(), doplaylist(): Modified to not
+#                   check if the ship is reserved since stillalive() does now.
+#                  .Mail(): Always make up the mailbox name since we need
+#                   two versions of the string for different sys calls.
+#                  .Drcreate(): Only update childpid if we were successful in
+#                   creating the process; consider ss$_dupnam an error now.
+#                  .Special(): Now, "na" behaves like "na1".
+# 3.06 12Oct83 CAL .Capentry(): General code hacking.
+#                  .Dead(): Modified to report funny killed by numbers to GOD.
+#                   Ratp1 now allows single quotes as the first character in a
+#                   string.
+#                  .Dobeam(), dobomb, play(): Modified to use stillalive().
+#                  .Putpmt(): New routine to display prompts.
+#                  .More(), dohelp(), doteamlist(), doplanlist(), doplaylist(),
+#                   opteamlist(), opplanlist(), opplaylist(): Modified to
+#                   use putpmt().
+#                  .Command(): Was (mistakenly) using csnum instead of cunum.
+# 3.05 11Oct83 CAL .Mail(): Recoded to use a mailbox instead of a scratch file.
+#                  .Conqinit(): Lengthened jpilist() to make sys$getjpi() happy.
+#                  .More(): Modified to clear the line before prompting.
+#                  .Stillalive(): New routine to determine if a ship is alive.
+#                  .Doreview(): New routine to handle player message reviews.
+#                  .Command(): Modified to use stillalive() and doreview().
+#                  .Menu(): Corrected end test in repeat-until loop. Modified
+#                   to use doreview().
+#                  .Dohelp(): Renamed from help(). Modified to use stillalive().
+#                  .Astservice(), doselfdest(), docoup(), dowar(): Modified
+#                   to use stillalive().
+#                  .Gettarget(): Renamed from cdgtarget().
+#                  .Options(): Changed strings to inline.
+#                  .Teamlist(): Modified to display one team list per call.
+#                  .Doteamlist(): New routine to display a player team list.
+#                  .Opteamlist(): New routine to display an operator team list.
+#                  .Planlist(): Modified to display one planet list per call.
+#                  .Doplanlist(): New routine to display a player team list.
+#                  .Opplanlist(): New routine to display an operator team list.
+#                  .Playlist(): Modified to display one player list per call.
+#                  .Doplaylist(): New routine to display a player list.
+#                  .Opplaylist(): New routine to display an operator list.
+# 3.04 06Oct83 CAL .*(): Removed shell spawning capability. Removed define
+#                   for NOIMPLICIT since it is defined by "incl/ratdef" now.
+# 3.03 04Oct83 CAL .*(): Reorganized routines, thus creating "src/conqvms".
+#                  .Conqinit(): New machine dependent initialization routine.
+#                  .Conqend(): New machine dependent clean-up routine.
+#                  .Conquest(): Modified to use conqinit() and conqend().
+#                  .Doshell(): Modified to raise priority during dospwn().
+#                  .Dosubdcl(): Modified to raise priority during lib$spawn().
+# 3.02 02Oct83 CAL .*(): Changed swarp and sdwarp to reals.
+#                  .Command(): Don't redraw the screen if we're no longer alive.
+#                  .Sortplanets(): Changed usages of cmpnames() to strcmp().
+#                  .Cmpnames(): Removed unused routine.
+#                  .Dead(): Reworked torpedo delay logic and increased the
+#                   maximum torpedo delay to 5 seconds.
+#                  .Sendmsg(): Added an argument for terseness and removed usage
+#                   of terse(). Also modified all calls to sendmsg().
+#                  .Terse(): Removed unused routine.
+#                  .More(): For some (unknown) reason, there were two versions
+#                   of this routine. The extra one was removed.
+#                  .Play(): Clear the display before calling display().
+# 3.01 01Oct83 CAL .Conqdriv(): Reordered driver logic to do "big" things first.
+#                  .Newship(): Fixed bug with ship teams when reincarnating.
+#                  .Dowarp(): Setting warp 0 when not moving no longer costs
+#                   fuel.
+#                  .Dobeam(): Default for beaming (when there is a choice) is
+#                   down. Also, fixed mistakes in self-war logic.
+# 3.00 18Sep83 CAL .Version number boost for the Decus distribution.
+#                  .Started detailed revision history.
+#
+############################################################################

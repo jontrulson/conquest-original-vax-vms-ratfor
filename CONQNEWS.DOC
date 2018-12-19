@@ -1,0 +1,323 @@
+
+                     TTThhheee CCCooonnnqqquuueeesssttt CCChhhrrrooonnniiicccllleee
+
+08Sep85:  A completely  new  robot  strategy  has been installed!
+          Watch out, because robots are  sssmmmaaarrrttt now.
+
+16Jun84:  You can now get a list of recent  users  with  the  'H'
+          command.
+
+13Jun84:  The new user stats page finally works!
+
+11Jun84:  You can now get info on a user.
+
+09Jun84:  Hacking  on temperature. Weapons and engines now have a
+          chance of breaking when they get too hot.  Tuning  will
+          continue for a little while.
+
+27May84:  Bombing  and  beaming  have  been  modified so that the
+          baud rate of your terminal doesn't have  such  a  large
+          effect.
+
+22Feb84:  Message  editing  implemented.  If you enter enter line
+          feed as the target of a message, you  can  send  a  new
+          message  by  editing  the target and text from the last
+          message you sent (or attempted to send).
+
+19Feb84:  You can now do info on "time".
+
+11Feb84:  The driver bug that made bombing easy and ships  faster
+          than  speeding  torps  has  been  fixed. Also, it is no
+          longer possible for two terminals to control  the  same
+          ship.  Now,  when  you reincarnate, you get to keep the
+          same ship number.
+
+15Jan84:  You can  now  switch  teams  as  long  as  you  haven't
+          entered  any  ships  since  the last time you resigned.
+          Weapons  defaulting  implemented;   firing   a   weapon
+          without  specifying  a  direction  defaults to the last
+          direction you fired any weapon.
+
+14Jan84:  The tractor command has been split into  two  commands.
+          Use  't'  to  tractor another ship and 'u' to untractor
+          or attempt to  break  free  of  another  ships  tractor
+          beams.  Also,  when  you attempt to tractor a ship, its
+          velocity relative to your ship must be warp 2 or less.
+
+          Shields now regenerate  twice  as  fast  (4  units  per
+          second) when they are down.
+
+09Jan84:  Robot  ships  now  automatically defend the home system
+          from attack. Ship tuning continues.
+
+20Dec83:  Massive ship tuning in progress...
+
+10Dec83:  A new fuel usage formula has been  installed;  now  any
+          activity  that uses fuel generates heat and adds to the
+          temperature of the ship. Also, a bug which  caused  the
+          autopilot  to overshoot planets has been discovered and
+          fixed.
+
+17Nov83:  Phaser base hits have been lowered from 100 to 92.
+
+13Nov83:  New statistics are being kept (but currently, there  is
+          no  way  to display them). Typing "i<cr>" will now give
+          info on the last thing you ask for info on.
+
+03Nov83:  A better acceleration formula has been installed.
+
+23Oct83:  Tractor beams aren't quite so deadly anymore. (This  is
+          a major   blow   to  Klingon  battle  tactics.)  A  new
+          acceleration formula that is team  dependent  has  been
+          added.  An  orbit  speed  limit has been imposed so now
+          you cannot orbit if you are going faster than warp 2.
+
+16Oct83:  Ships now enter at least accurate  info  distance  away
+          from their nearest enemy.
+
+15Oct83:  It  is  now  possible  to change war and peace settings
+          from the menu.
+
+06Oct83:  Shell spawning was removed. Spawn to DCL instead.
+
+19Sep83:  The first Decus distribution  of  CCCooonnnqqquuueeesssttt  was  mailed
+          today.
+
+05Sep83:  Torpedo  detonation has been worked over so that all of
+          your active torpedoes go off when you die;  this  means
+          that  you  should always get credit for when your torps
+          kill the ship that killed  you.  Spawning  to  DCL  was
+          added,  use  '$'  followed  by  a  line feed to spawn a
+          process.
+
+01Sep83:  The race dependent weapons  factors  have  been  tuned,
+          now  Orions are 0.83, Klingons and Federations are 1.0,
+          and Romulans are 1.17.  The  course  command  has  been
+          modified  so that when you set course for a planet, you
+          get the same  information  as  you  do  with  the  info
+          command.  Also,  when  you set course for another ship,
+          if you terminate your command with line feed, you  will
+          get info on the ship.
+
+29Aug83:  The  Evil  Display  Bug took heavy damage yesterday and
+          finally  fell  this  evening.  Services  will  be  held
+          Wednesday at the Red Hour.
+
+24Aug83:  The   phaser   command  modified  to  set  last  phaser
+          direction even if your phasers are not ready  yet.  The
+          planet list is now sorted by planet name.
+
+13Aug83:  Torp  alert  code  added. Now you will always be warned
+          when enemy torps get within accurate info range.
+
+          Code added  to  (hopefully)  prevent  driver  thrashing
+          when cpu time is at a premium.
+
+          Cloaking  modified  to allow "silent running", i.e. you
+          can stay cloaked at warp zero for a  long  time.  Also,
+          cloaking  fuel  cost depends on speed (cloaking at warp
+          10 is vvveeerrryyy expensive).
+
+          Towing modified; the maximum  towing  distance  is  now
+          larger.  Also, breaking free of an unfriendly ships tow
+          does not always succeed and trying  freezes  your  ship
+          up for a whole second.
+
+12Aug83:  Weapon   tuning  continues.  Phasers  are  still  quite
+          strong but this will be corrected in the  near  future.
+          Now  distance  is  used  to  break  ties  when  you are
+          searching for weak planets. This means that if you  ask
+          for  info  on the weakest planet with 10 or more armies
+          and two planets have 10 armies each, you will  be  told
+          about  the  closer  of  the two. Also, the info command
+          has been modified to warn you that a planet is  hostile
+          when you get info on it.
+
+17Jul83:  Several  bugs  related  to  the  conversion  to the new
+          ratfor fixed. Ken's version of  phaser  graphics  added
+          (complaints  to  him). Also, there is now a user option
+          for phaser graphics.
+
+04Jul83:  CCCooonnnqqquuueeesssttt now runs from decnet ports!
+
+03Jul83:  Planet  movement  is  three  times   smoother.   Novice
+          players  will  now  enjoy  fantastic  phaser  graphics.
+          Firing phasers no longer locks up your  ship,  but  you
+          still  can't  fire  them more often than once a second.
+          Torpedos are... different. (Ken was *not* amused.)  The
+          remote terminal bug is almost fixed.
+
+          On  its  one year anniversary, CCCooonnnqqquuueeesssttt now runs on two
+          Vaxen.
+
+          Remember, this is Be Kind to Klingons  week,  so  don't
+          aim for Ken's gonads.
+
+14Jun83:  Full  duplex  screen  updating implemented. Now you can
+          see  your   enemy   attacking   even   when   you   are
+          constructing  an insult for him. Common block updating.
+          Now the common block is flushed to  the  disk  every  5
+          minutes.  This  should  take  care  of  the  time  warp
+          problem.
+
+23May83:  Captured system entry now works. The  evil  course  360
+          wandering bug has been fixed.
+
+13May83:  Even  more  driver  hacking,  now  the  "phase"  of the
+          Universe is kept in the common block. This  means  that
+          five  minute  things  will happen every five minutes of
+          game  time,  etc.  You  can  now  send  mail  to   "The
+          Implementors"  by  sending  a  message to "i". Finally,
+          the self-destruct code was modified so that  it  really
+          takes  fifteen  seconds to exit, even if some cretin is
+          running rat4.
+
+07May83:  Tuned driver  startup  logic.  Added  a  new  "nearest"
+          thing  to  look  for,  nearest team planet, "ntp". This
+          was done to appease  the  CCCooonnnqqquuueeesssttt  GGGoooddd,,,  who  was  not
+          happy  with the hack to "nap". Also, all of the nearest
+          planet special strings may now  be  qualified  with  an
+          army  threshold.  A  new user option, "terse", has been
+          added. For the most part, turning this option  shortens
+          the  "press  space  for more" prompts. The manual entry
+          has been revised; check it out for more information.
+
+29Apr83:  A new and  improved  CCCooonnnqqquuueeesssttt  manual  entry  has  been
+          written  and  installed.  The  user  rating formula has
+          been improved. When getting information on  or  setting
+          course   for  the  nearest  army  planet,  "nap",  only
+          planets that are owned by your team and have more  than
+          three  armies are considered. Also, if you terminate an
+          information command with LF instead  of  CR,  you  will
+          get  info  about  the  second  nearest object. Code was
+          added to automatically disable insert and  delete  line
+          display.  (That's  right, you can throw away your local
+          copy  of  termcap  without  getting  seasick!)  Inverse
+          video  has been added to the pagefile routine. Finally,
+          the CCCooonnnqqquuueeesssttt operator program  is  even  MMMOOORRREEE  powerful
+          than before.
+
+14Apr83:  New  command  implemented.  ^R now can be used to force
+          the screen to be updated completely. Also, a  new  user
+          option  forces  the  screen  to  always  be  completely
+          updated, even during battle.
+
+12Apr83:  Many, many more bugs fixed. Many more  features  added.
+          Now  LF  can be used to send a message to the last ship
+          you sent to. Driver hacking  is  now  complete;  it  is
+          IIIMMMPPPOOOSSSSSSIIIBBBLLLEEE  for more than one driver to run at the same
+          time. It is not possible to run a driver manually  from
+          a terminal.  The  player  ships  now  notice  that  the
+          driver has died within 5 seconds.  When  a  the  player
+          who  has  the  driver  exits  CCCooonnnqqquuueeesssttt,,,  he  causes the
+          driver to kill itself; the other players then  bid  for
+          running   it.   This   means   that  the  Game  is  not
+          interrupted just because someone logs off.
+
+19Mar83:  Many, many bugs fixed. Many  features  added.  Cloaking
+          now   works.   Also,  enhanced  informational  scanning
+          implemented.
+
+08Dec82:  Re-organized  the  display  somewhat  to   enable   the
+          terminal package to make use of clear-to-end-of-line.
+
+04Nov82:  Implemented  some  restrictions  on playing: no playing
+          over  dialups,  by  GUEST,   or   during   prime   time
+          (7:00-18:00 weekdays). Priority is set to 2.
+
+28Oct82:  Fixed bug in bombarding.
+
+25Oct82:  Added n, ne, ns, np, nep, nr, nf, and na.
+
+24Oct82:  Added  a  number  of new features, the biggest of which
+          is  orbiting  planets.  Also  I  juggled  some  of  the
+          parameters in an attempt to make the teams more equal.
+
+18Oct82:  Added  a  "shit-list" flag, to prevent obnoxious people
+          from playing. Added a real neat feature  which  finally
+          lets  broadcast  messages  from  the  outside world get
+          through. Made the game run at a lower priority.
+
+13Oct82:  Changed the "p" command to not enter  a  mode.  Now  it
+          just  fires  a  single  torp  and  goes back to command
+          mode.
+
+06Oct82:  Fixed a bug,  added  a  feature.  Recompiled  with  the
+          re-written raw I/O library - should go faster now.
+
+22Sep82:  Added  a  "last  words" feature - when you conquer, you
+          get to leave a message for everyone to see.
+
+20Sep82:  Minor tuning mods. Also the  doomsday  machine  is  now
+          both less common and more sadistic.
+
+13Sep82:  After  three  weeks  of  downtime,  I finally found the
+          major  bug  in  the  slow-turning  code.  As  usual,  a
+          strongly-typed  language  would  have  caught  it right
+          away. I believe there are  still  some  minor  problems
+          with   slow  turning  -  let  me  know  if  you  notice
+          anything.
+
+23Aug82:  Turning now takes time, and  it  takes  more  time  the
+          faster you are going. Slow down to turn.
+
+20Aug82:  Ken  the Kunning Klingon discovered an embarrassing bug
+          - I had a test reversed in the  routine  takeplanet  so
+          that  every  time  you  conquered  a  planet  you  also
+          conquered the Universe.
+
+18Aug82:  Fixed  annoyingly  persistent   bug   which   prevented
+          planets from being taken.
+
+08Aug82:  Couping  should  work  now.  Watch out for the doomsday
+          machine.
+
+29jul82:  I did some rewriting to  try  and  get  the  driver  to
+          restart  automatically  when  it dies. It doesn't quite
+          work yet, so beware...
+
+27Jul82:  Arrow keys work. Locking onto planets works.
+
+25Jul82:  The universe was conquered for the first time  tonight,
+          by  the Orions. It almost worked perfectly. At the last
+          instant, the common block  got  locked  up.  Also,  the
+          Orion  team  didn't  get  credit for the win. Both bugs
+          should be fixed now, so I am  looking  forward  to  the
+          next conquest.
+
+24Jul82:  Engine  temperature and fuel consumption are now pretty
+          much working. I still have to  do  some  fiddling  with
+          the constants to get things exactly right.
+
+18Jul82:  Fixed  a  bug  which prevented anyone but Romulans from
+          killing people. On second thought, maybe I should  have
+          left it in...
+
+16Jul82:  More    commands    added,    including   info.   Also,
+          self-destruct now works even if  the  driver  is  dead.
+          This should make Mister Xavier happy.
+
+12Jul82:  You   can   now   change  course  and  fire  torpedoes.
+          Commander Saavik immediately took advantage of this  by
+          traveling   to   Earth   and   destroying   hoardes  of
+          feddie-bears.
+
+03Jul82:  The display works pretty well now. More commands  work.
+          The  first  interplanetary  voyage  took  place  today:
+          Commander  Saavik  piloted  the  Romulan  flagship   to
+          Sirius.  The  ship was incinerated upon arrival. Saavik
+          then journeyed to the edge of  the  galaxy,  where  she
+          was one again incinerated. Score: galaxy 2, Saavik 0.
+
+02Jul82:  The display started working today. Some commands work.
+
+28Jun82:  Ships  are  flying now. However, the display generation
+          and command interpretation still needs to be  done,  so
+          it is not much use.
+
+27Jun82:  The  news  option  was installed today. Ships should be
+          flying pretty soon. The driver is working, I just  have
+          to add the code to launch a ship.
+
+Questions, comments, bug reports, suggestions, advice, insults to LERES.
+
